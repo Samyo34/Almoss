@@ -11,11 +11,10 @@ public class FenetreAlmoss extends JFrame{
 		this.setTitle("Almoss");
 	    this.setSize(700, 600);
 	    this.setLocationRelativeTo(null);
-	    //onglets = new PanelAlmoss();
+	    onglets = new PanelAlmoss();
 	    /* test de l'onglet */
-	    JTabbedPane onglet= new JTabbedPane();
-	    onglet.addTab("onglet 1",null, null);
-	    this.setContentPane(onglet);               
+	    //JTabbedPane onglet= new JTabbedPane();
+	    this.setContentPane(onglets);               
 	    this.setVisible(true);
 	}
 
