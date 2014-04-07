@@ -17,7 +17,7 @@ public class PanelAlmoss extends JPanel{
 		onglet = new JTabbedPane();
 		JComponent ong1 = makeTextPanel("Panel #1");// Permet d'écrire du texte dans un onglet
 		// Ajout d'un onglet (onglet 1)
-		onglet.addTab("onglet 1", null,ong1);
+		onglet.addTab("Pliage", null,ong1);
 		JComponent ong2 = makeTextPanel("Panel #2");
 		// Ajout d'un onglet (onglet 2)
 		onglet.addTab("onglet 2",null,ong2);

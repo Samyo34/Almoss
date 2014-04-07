@@ -14,10 +14,9 @@ public class FenetreAlmoss extends JFrame{
 	    MenuBarAlmoss menu = new MenuBarAlmoss();
 	    setJMenuBar(menu);
 	    onglets = new PanelAlmoss();
-	    /* test de l'onglet */
-	    //JTabbedPane onglet= new JTabbedPane();
 	    this.setContentPane(onglets);               
 	    this.setVisible(true);
+	    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 }
