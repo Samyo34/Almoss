@@ -17,7 +17,7 @@ public class MenuBarAlmoss extends JMenuBar{
 	JFileChooser choix;
 	int returnVal;
 	File file ;
-	boolean filesel = false; // indique si l'utilisateur à selectionner un fichier
+	boolean filesel = false; // indique si l'utilisateur ï¿½ selectionner un fichier
 	
 	public MenuBarAlmoss(final FenetreAlmoss fen) throws FileNotFoundException{
 		super();
@@ -32,8 +32,8 @@ public class MenuBarAlmoss extends JMenuBar{
 			public void actionPerformed(ActionEvent e){
 				choix = new JFileChooser();
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la fenetre de selection des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqué sur OK ou annuler (ou autres...)
-				file = choix.getSelectedFile(); // Récupération du fichier séléctionner
+				// returnVal permet de tester si l'utilisateur a cliquï¿½ sur OK ou annuler (ou autres...)
+				file = choix.getSelectedFile(); // Rï¿½cupï¿½ration du fichier sï¿½lï¿½ctionner
 				if (returnVal == JFileChooser.APPROVE_OPTION){
 					filesel = true;
 					fen.changeTextOnglet(1, getFileName());
@@ -57,7 +57,7 @@ public class MenuBarAlmoss extends JMenuBar{
 		if (filesel){
 			return file.getName();
 		}else{
-			return "Aucun fichier selectionner";
+			return "Aucun fichier selectionnÃ©";
 		}
 	}
 
