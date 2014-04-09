@@ -91,7 +91,7 @@ public class Addition {
 				  soust.write(debut[i]);
 			  }
 			  for (int i=256; i<addition.size();i++){
-					  soust.write(addition.get(i).toString());
+					  soust.write(addition.get(i));
 					  soust.write("\r\n");  		  
 			  }
 			  

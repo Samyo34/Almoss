@@ -96,7 +96,7 @@ public class Soustraction {
 				  soust.write(debut[i]);
 			  }
 			  for (int i=256; i<soustraction.size();i++){
-				  soust.write(soustraction.get(i).toString());
+				  soust.write(soustraction.get(i));
 				  soust.write("\r\n");  		  
 			  }
 			  
