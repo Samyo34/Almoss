@@ -2,6 +2,7 @@ package almoss;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -13,15 +14,18 @@ public class PanelAlmoss extends JPanel{
 	
 	private JTabbedPane onglet;
 	JComponent ong1, ong2;
+	PanelOpe ongOpe = new PanelOpe();
+	PanelPliage ongPli =  new PanelPliage();
 	
 	
-	public PanelAlmoss(MenuBarAlmoss menu){
+	public PanelAlmoss(MenuBarAlmoss menu)  throws IOException {
 		super(new GridLayout(1,1));
 		onglet = new JTabbedPane();
-		ong1 = makeTextPanel(menu.getFileName());// Permet d'écrire du texte dans un onglet
+		ong1 = ongPli;
 		// Ajout d'un onglet (onglet 1)
 		onglet.addTab("Pliage", null,ong1);
-		ong2 = makeTextPanel("Panel #2");
+		
+		ong2 = ongOpe;
 		// Ajout d'un onglet (onglet 2)
 		onglet.addTab("onglet 2",null,ong2);
 		// Ajoute l'ensemble des onglets dans PanelAlmoss (en organisation GridLayout(1,1))

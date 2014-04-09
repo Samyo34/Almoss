@@ -1,4 +1,4 @@
-package Almoss;
+package almoss;
 import java.io.*;
 
 public class Operations {
