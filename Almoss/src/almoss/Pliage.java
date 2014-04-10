@@ -1,60 +1,222 @@
 package almoss;
-import java.awt.BufferCapabilities.FlipContents;
 import java.io.*;
+import java.util.ArrayList;
 
-//Pour l'instant le pliage prend 521 points et le replie donc en 256 au centre
-//Devra ï¿½tre amï¿½liorï¿½ en pouvant changer le point de pli(de symï¿½trie)
+//Pour l'instant le pliage prend 512 points et le replie donc en 256 au centre
+//Devra être amélioré en pouvant changer le point de pli(de symétrie)
 
 public class Pliage {
-	File file;//Rï¿½cupï¿½rer le fichier ouvert via la barre de menu
-	int point;
-	byte point2;
-	FileInputStream input;
-	
+	File file;//Récupérer le fichier ouvert via la barre de menu
+	static FileInputStream fis;
+	static int byteLu;
+			
+			
+			
 	public Pliage(File file){
 		this.file=file;
 	}
 	
-		public void pli(File file) throws IOException //Mï¿½thode de pli 
+		public void pli(File file) throws IOException //Méthode de pli 
 		{
-			this.input = new FileInputStream("/auto_home/sbricas/Dropbox/spectre3.MCS");
-			File pliage = new File("pli.mcs");
-			pliage.createNewFile();
-			FileWriter ecPli1 = new FileWriter(pliage);
+		  ArrayList<Integer>list = new ArrayList<Integer>();//Liste contenant tous les points
+		  byte[] debut = new byte[256];
+		  fis=new FileInputStream(file);
+		  int point;
+		  
+		  try{
+		  		//fis.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
+			  for(int i=0;i<256;i++){
+				  debut[i]=(byte) fis.read();
+			  }
+				while((byteLu=fis.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
+					list.add(byteLu);// Ajout de la valeur à la liste
+				}
+			}
+			finally{
+				fis.close();
+			}
 			
-			File pliage2 = new File("pli.txt");
-			pliage2.createNewFile();
-			FileWriter ecPli2  = new FileWriter(pliage2);
+		  
+			int size=list.size();//Doit être pair sinon erreur dans les boucles for
+			int moitie1[]=new int[size/2];//Première moitié avant le pli
+			int moitie2[]=new int[size/2];//Seconde moitié avant le pli
+			int pli_tab[]=new int[size/2];//Résultat du pli
 			
-			System.out.println("test2");
-			int size=512;//Doit ï¿½tre pair sinon erreur dans les boucles for
-			int moitie1[]=new int[256];//Premiï¿½re moitiï¿½ avant le pli
-			int moitie2[]=new int[256];//Seconde moitiï¿½ avant le pli
-			int pli[]=new int[256];//Rï¿½sultat du pli
 			
+
 			for(int i=0;i<size/2;i++)
 			{
-				moitie1[i]= input.read();//Lit la premiere moitiï¿½ des points
+				moitie1[i]=list.get(i);//Lit la premiere moitié des points
+				moitie2[i]=list.get(i+size/2);//Lit la seconde moitié des points
+				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points opposés avant le pli
+				pli_tab[i]=point;
 			}
-			System.out.println("test3");
-			for(int i=0;i<size/2;i++)
-			{
-				moitie2[i]=input.read();//Lit la seconde moitiï¿½ des points
-			}
-			input.close();//Fermeture du Stream de lecture (DataInputStream)
 			
-			System.out.println("test4");
-			for(int i=0;i<size/2;i++)
-			{
-				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points opposï¿½s avant le pli
-				point2 = (byte) ((byte)(moitie1[i]+moitie2[size-i])/2);
-				pli[i]=point;
-				ecPli1.write(pli[i]);//Ecriture du fichier pli
-				ecPli2.write(point2);
-			}
-			ecPli1.close();
-			ecPli2.close();
-			System.out.println(pliage.getAbsolutePath());
-			
+			  /*Ecriture dans un fichier */
+				  File pli = new File("pli.txt");
+				  File plidest =  new File("E:/Travail/Projet Almoss/"+"pli.txt");
+				  pli.createNewFile();
+				  copyFile(pli,plidest);
+				  
+				  FileWriter writer = new FileWriter(pli);
+				  
+				  for(int i =0;i<256;i++){
+					  writer.write(debut[i]);
+				  }
+				  
+				  for (int i=256; i<list.size();i++){
+					  writer.write(list.get(i).toString());
+					  writer.write("\r\n");  		  
+				  }
+				  
+				  writer.close();
 		}
+
+		
+		  public static boolean copyFile(File source, File dest){
+				try{
+					// Declaration et ouverture des flux
+					java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
+			 
+					try{
+						java.io.FileOutputStream destinationFile = null;
+			 
+						try{
+							destinationFile = new FileOutputStream(dest);
+			 
+							// Lecture par segment de 0.5Mo 
+							byte buffer[] = new byte[512 * 1024];
+							int nbLecture;
+			 
+							while ((nbLecture = sourceFile.read(buffer)) != -1){
+								destinationFile.write(buffer, 0, nbLecture);
+							}
+						} finally {
+							destinationFile.close();
+						}
+					} finally {
+						sourceFile.close();
+					}
+				} catch (IOException e){
+					e.printStackTrace();
+					return false; // Erreur
+				}
+				source.delete();
+				return true; // Résultat OK  
+			}
+
 }
+
+
+
+package almoss;
+import java.io.*;
+import java.util.ArrayList;
+
+//Pour l'instant le pliage prend 512 points et le replie donc en 256 au centre
+//Devra être amélioré en pouvant changer le point de pli(de symétrie)
+
+public class Pliage {
+	File file;//Récupérer le fichier ouvert via la barre de menu
+	static FileInputStream fis;
+	static int byteLu;
+			
+			
+			
+	public Pliage(File file){
+		this.file=file;
+	}
+	
+		public void pli(File file) throws IOException //Méthode de pli 
+		{
+		  ArrayList<Integer>list = new ArrayList<Integer>();//Liste contenant tous les points
+		  byte[] debut = new byte[256];
+		  fis=new FileInputStream(file);
+		  int point;
+		  
+		  try{
+		  		//fis.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
+			  for(int i=0;i<256;i++){
+				  debut[i]=(byte) fis.read();
+			  }
+				while((byteLu=fis.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
+					list.add(byteLu);// Ajout de la valeur à la liste
+				}
+			}
+			finally{
+				fis.close();
+			}
+			
+		  
+			int size=list.size();//Doit être pair sinon erreur dans les boucles for
+			int moitie1[]=new int[size/2];//Première moitié avant le pli
+			int moitie2[]=new int[size/2];//Seconde moitié avant le pli
+			int pli_tab[]=new int[size/2];//Résultat du pli
+			
+			
+
+			for(int i=0;i<size/2;i++)
+			{
+				moitie1[i]=list.get(i);//Lit la premiere moitié des points
+				moitie2[i]=list.get(i+size/2);//Lit la seconde moitié des points
+				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points opposés avant le pli
+				pli_tab[i]=point;
+			}
+			
+			  /*Ecriture dans un fichier */
+				  File pli = new File("pli.txt");
+				  File plidest =  new File("E:/Travail/Projet Almoss/"+"pli.txt");
+				  pli.createNewFile();
+				  copyFile(pli,plidest);
+				  
+				  FileWriter writer = new FileWriter(pli);
+				  
+				  for(int i =0;i<256;i++){
+					  writer.write(debut[i]);
+				  }
+				  
+				  for (int i=256; i<list.size();i++){
+					  writer.write(list.get(i).toString());
+					  writer.write("\r\n");  		  
+				  }
+				  
+				  writer.close();
+		}
+
+		
+		  public static boolean copyFile(File source, File dest){
+				try{
+					// Declaration et ouverture des flux
+					java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
+			 
+					try{
+						java.io.FileOutputStream destinationFile = null;
+			 
+						try{
+							destinationFile = new FileOutputStream(dest);
+			 
+							// Lecture par segment de 0.5Mo 
+							byte buffer[] = new byte[512 * 1024];
+							int nbLecture;
+			 
+							while ((nbLecture = sourceFile.read(buffer)) != -1){
+								destinationFile.write(buffer, 0, nbLecture);
+							}
+						} finally {
+							destinationFile.close();
+						}
+					} finally {
+						sourceFile.close();
+					}
+				} catch (IOException e){
+					e.printStackTrace();
+					return false; // Erreur
+				}
+				source.delete();
+				return true; // Résultat OK  
+			}
+
+}
+
+
+
