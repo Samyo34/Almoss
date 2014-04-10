@@ -30,7 +30,7 @@ public class Soustraction {
 				  debut[i]=(byte) fis1.read();
 			  }
 				while((byteLu=fis1.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list1.add(byteLu);// Ajout de la valeur à la liste
+					list1.add(byteLu);// Ajout de la valeur ï¿½ la liste
 				}
 			}
 			finally{
@@ -45,7 +45,7 @@ public class Soustraction {
 		  try{
 			  	fis2.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
 				while((byteLu=fis2.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list2.add(byteLu);// Ajout de la valeur à la liste
+					list2.add(byteLu);// Ajout de la valeur ï¿½ la liste
 				}
 			}
 			finally{
@@ -68,18 +68,18 @@ public class Soustraction {
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){
-			  File sous = new File("addition.txt");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
+			  File sous = new File("soustraction.txt");
+			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.txt");
 			  sous.createNewFile();
 			  copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
 			  
-			  for(int i =0;i<256;i++){
+			  /*for(int i =0;i<256;i++){
 				  soust.write(debut[i]);
-			  }
+			  }*/
 			  
-			  for (int i=256; i<soustraction.size();i++){
+			  for (int i=0; i<soustraction.size();i++){
 				  soust.write(soustraction.get(i).toString());
 				  soust.write("\r\n");  		  
 			  }
@@ -134,7 +134,7 @@ public class Soustraction {
 				return false; // Erreur
 			}
 			source.delete();
-			return true; // Résultat OK  
+			return true; // Rï¿½sultat OK  
 		}
 
 

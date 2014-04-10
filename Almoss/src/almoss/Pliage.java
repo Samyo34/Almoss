@@ -3,10 +3,10 @@ import java.awt.BufferCapabilities.FlipContents;
 import java.io.*;
 
 //Pour l'instant le pliage prend 521 points et le replie donc en 256 au centre
-//Devra être amélioré en pouvant changer le point de pli(de symétrie)
+//Devra ï¿½tre amï¿½liorï¿½ en pouvant changer le point de pli(de symï¿½trie)
 
 public class Pliage {
-	File file;//Récupérer le fichier ouvert via la barre de menu
+	File file;//Rï¿½cupï¿½rer le fichier ouvert via la barre de menu
 	int point;
 	byte point2;
 	FileInputStream input;
@@ -15,9 +15,9 @@ public class Pliage {
 		this.file=file;
 	}
 	
-		public void pli(File file) throws IOException //Méthode de pli 
+		public void pli(File file) throws IOException //Mï¿½thode de pli 
 		{
-			this.input = new FileInputStream("E:/Travail/Projet Almoss/spectre3.MCS");
+			this.input = new FileInputStream("/auto_home/sbricas/Dropbox/spectre3.MCS");
 			File pliage = new File("pli.mcs");
 			pliage.createNewFile();
 			FileWriter ecPli1 = new FileWriter(pliage);
@@ -27,26 +27,26 @@ public class Pliage {
 			FileWriter ecPli2  = new FileWriter(pliage2);
 			
 			System.out.println("test2");
-			int size=512;//Doit être pair sinon erreur dans les boucles for
-			int moitie1[]=new int[256];//Première moitié avant le pli
-			int moitie2[]=new int[256];//Seconde moitié avant le pli
-			int pli[]=new int[256];//Résultat du pli
+			int size=512;//Doit ï¿½tre pair sinon erreur dans les boucles for
+			int moitie1[]=new int[256];//Premiï¿½re moitiï¿½ avant le pli
+			int moitie2[]=new int[256];//Seconde moitiï¿½ avant le pli
+			int pli[]=new int[256];//Rï¿½sultat du pli
 			
 			for(int i=0;i<size/2;i++)
 			{
-				moitie1[i]= input.read();//Lit la premiere moitié des points
+				moitie1[i]= input.read();//Lit la premiere moitiï¿½ des points
 			}
 			System.out.println("test3");
 			for(int i=0;i<size/2;i++)
 			{
-				moitie2[i]=input.read();//Lit la seconde moitié des points
+				moitie2[i]=input.read();//Lit la seconde moitiï¿½ des points
 			}
 			input.close();//Fermeture du Stream de lecture (DataInputStream)
 			
 			System.out.println("test4");
 			for(int i=0;i<size/2;i++)
 			{
-				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points opposés avant le pli
+				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points opposï¿½s avant le pli
 				point2 = (byte) ((byte)(moitie1[i]+moitie2[size-i])/2);
 				pli[i]=point;
 				ecPli1.write(pli[i]);//Ecriture du fichier pli

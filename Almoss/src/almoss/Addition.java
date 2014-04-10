@@ -27,7 +27,7 @@ public class Addition {
 				  debut[i]=(byte) fis1.read();
 			  }
 				while((byteLu=fis1.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list1.add(byteLu);// Ajout de la valeur à la liste
+					list1.add(byteLu);// Ajout de la valeur ï¿½ la liste
 				}
 			}
 			finally{
@@ -42,7 +42,7 @@ public class Addition {
 		  try{
 			  	fis2.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
 				while((byteLu=fis2.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list2.add(byteLu);// Ajout de la valeur à la liste
+					list2.add(byteLu);// Ajout de la valeur ï¿½ la liste
 				}
 			}
 			finally{
@@ -56,8 +56,15 @@ public class Addition {
 		  
 		  /* ****************Addition******************* */
 		  ArrayList<Integer>addition = new ArrayList<Integer>();
+		  int taille;
+		  if(list1.size()>list2.size()){
+			  taille = list2.size();
+		  }else{
+			  taille= list1.size();
+		  }
 		  
-		  for(int i = 0; i<list1.size();i++){
+		  for(int i = 0; i<taille;i++){
+			  System.out.println(list1.size());
 			  addition.add(list1.get(i)+list2.get(i));
 			  System.out.println(addition.get(i));
 		  }
@@ -65,17 +72,18 @@ public class Addition {
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){
-			  File sous = new File("soustraction.txt");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.txt");
+			  File sous = new File("addition.txt");
+			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
 			  sous.createNewFile();
-			  copyFile(sous,sousdest);
+			  //copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
-			  for(int i =0;i<256;i++){
+			  /*for(int i =0;i<256;i++){
 				  soust.write(debut[i]);
-			  }
-			  for (int i=256; i<addition.size();i++){
+			  }*/
+			  for (int i=0; i<addition.size();i++){
 					  soust.write(addition.get(i).toString());
+					  System.out.println(addition.get(i).toString());
 					  soust.write("\r\n");  		  
 			  }
 			  
@@ -84,7 +92,7 @@ public class Addition {
 			  File sous = new File("soustraction.mcs");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
 			  sous.createNewFile();
-			  copyFile(sous,sousdest);
+			  //copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
 			  for(int i =0;i<256;i++){
@@ -129,7 +137,7 @@ public class Addition {
 				return false; // Erreur
 			}
 			source.delete();
-			return true; // Résultat OK  
+			return true; // Rï¿½sultat OK  
 		}
 
 

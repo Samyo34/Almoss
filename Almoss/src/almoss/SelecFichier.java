@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class SelecFichier extends JButton{
-	private File fichier;
+	public File fichier;
 	JFileChooser choix;
 	int returnVal;
 	
@@ -22,7 +22,8 @@ public class SelecFichier extends JButton{
 				choix = new JFileChooser();
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la fenetre de selection des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK ou annuler (ou autres...)
-				fichier = choix.getSelectedFile(); // R�cup�ration du fichier s�l�ctionner
+				
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration du fichier s�l�ctionner
 				if (returnVal == JFileChooser.APPROVE_OPTION){
 					 pane.changeCouleur(num);
 				}
@@ -38,13 +39,14 @@ public class SelecFichier extends JButton{
 				choix = new JFileChooser();
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la fenetre de selection des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK ou annuler (ou autres...)
-				fichier = choix.getSelectedFile(); // R�cup�ration du fichier s�l�ctionner
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration du fichier s�l�ctionner
 			}
 		});
 
 	}
 	
 	public File getFichier(){
-		return fichier;
+		return this.fichier;
+		
 	}
 }

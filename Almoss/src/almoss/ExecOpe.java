@@ -10,6 +10,9 @@ import javax.swing.JComboBox;
 
 public class ExecOpe extends JButton{
 	
+	File fich = new File("/auto_home/sbricas/Dropbox/SPECTRE.Mcs");
+	File fi2 = new File("/auto_home/sbricas/Dropbox/spectre3.MCS");
+
 	public ExecOpe(String s,final JComboBox box, final File fich1, final File fich2, final JComboBox type) throws IOException{
 		super(s);
 		addActionListener(new ActionListener(){
@@ -17,7 +20,7 @@ public class ExecOpe extends JButton{
 				if(box.getSelectedItem()=="Addition"){
 					if (type.getSelectedItem()==".txt"){
 						try {
-							Addition add = new Addition(fich1,fich2,0);
+							Addition add = new Addition(fich,fi2,0);
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();
@@ -34,7 +37,7 @@ public class ExecOpe extends JButton{
 				}else{
 					if (type.getSelectedItem()==".txt"){
 						try {
-							Soustraction add = new Soustraction(fich1,fich2,0);
+							Soustraction add = new Soustraction(fich,fi2,0);
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();

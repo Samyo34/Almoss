@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 /* 
  * Cette classe premet de creer l'ensemble des composants
- * de l'onglet sur les opérations
+ * de l'onglet sur les opï¿½rations
  */
 
 public class PanelOpe extends JPanel{
@@ -30,11 +30,11 @@ public class PanelOpe extends JPanel{
 	
 	public PanelOpe() throws IOException{
 		
-		SelecFichier ouvr1 = new SelecFichier("Selection Fichier 1",this,1); // Bouton offrant la possiblité d'ouvrire le premier fichier
-		SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblité d'ouvrire le second fichier
+		SelecFichier ouvr1 = new SelecFichier("Selection Fichier 1",this,1); // Bouton offrant la possiblitï¿½ d'ouvrire le premier fichier
+		SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblitï¿½ d'ouvrire le second fichier
 		ExecOpe ope = new ExecOpe("Operation",choixOpe,ouvr1.getFichier(),ouvr2.getFichier(),type);
 		
-		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'opération
+		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'opï¿½ration
 		JPanel panelSelec = new JPanel();// Panel pour inserer les elements de selection de fichier
 		
 		
@@ -73,7 +73,7 @@ public class PanelOpe extends JPanel{
 	
 	public void changeCouleur(int num){
 		/*
-		 * Change la couleur de la checkBox numéros num
+		 * Change la couleur de la checkBox numï¿½ros num
 		 * repaint ensuite
 		 */
 		
