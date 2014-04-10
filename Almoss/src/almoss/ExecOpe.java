@@ -10,8 +10,8 @@ import javax.swing.JComboBox;
 
 public class ExecOpe extends JButton{
 	
-	File fich = new File("/auto_home/sbricas/Dropbox/SPECTRE.Mcs");
-	File fi2 = new File("/auto_home/sbricas/Dropbox/spectre3.MCS");
+	File fich = new File("D:/1.MCS");
+	File fi2 = new File("D:/2.Mcs");
 
 	public ExecOpe(String s,final JComboBox box, final File fich1, final File fich2, final JComboBox type) throws IOException{
 		super(s);

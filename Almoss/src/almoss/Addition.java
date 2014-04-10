@@ -11,6 +11,8 @@ public class Addition {
 	
 	static FileInputStream fis1,fis2;
 	static int byteLu;
+	static byte[] buffer = new byte[4];
+	static byte[] buffer2 = new byte[4];
 	
 	  //public static void main(String[] argv) throws IOException
 		public Addition(File file1, File file2, int type) throws IOException
@@ -26,8 +28,10 @@ public class Addition {
 			  for(int i=0;i<256;i++){
 				  debut[i]=(byte) fis1.read();
 			  }
-				while((byteLu=fis1.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list1.add(byteLu);// Ajout de la valeur � la liste
+
+				while((byteLu=fis1.read(buffer))!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
+					int oct = byteArrayToInt(buffer);
+					list1.add(oct);// Ajout de la valeur � la liste
 				}
 			}
 			finally{
@@ -41,8 +45,10 @@ public class Addition {
 		  fis2=new FileInputStream(file2);
 		  try{
 			  	fis2.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
-				while((byteLu=fis2.read())!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					list2.add(byteLu);// Ajout de la valeur � la liste
+				while((byteLu=fis2.read(buffer))!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
+					int o = byteArrayToInt(buffer);
+					list2.add(o);// Ajout de la valeur � la liste
+					System.out.println(o);
 				}
 			}
 			finally{
@@ -64,9 +70,7 @@ public class Addition {
 		  }
 		  
 		  for(int i = 0; i<taille;i++){
-			  System.out.println(list1.size());
 			  addition.add(list1.get(i)+list2.get(i));
-			  System.out.println(addition.get(i));
 		  }
 		  
 		  
@@ -83,7 +87,6 @@ public class Addition {
 			  }*/
 			  for (int i=0; i<addition.size();i++){
 					  soust.write(addition.get(i).toString());
-					  System.out.println(addition.get(i).toString());
 					  soust.write("\r\n");  		  
 			  }
 			  
@@ -139,6 +142,17 @@ public class Addition {
 			source.delete();
 			return true; // R�sultat OK  
 		}
+	  
+	  public static int byteArrayToInt (byte[] b)
+	  {
+	      int value = 0;
+	      for (int i = 0; i < 4; i++)
+	      {
+	          int n = (b[i] < 0 ? (int) b[i] + 256 : (int)b[i]) << (8 * i);
+	          value += n;
+	      }
+	      return value;
+	  }
 
 
 }
