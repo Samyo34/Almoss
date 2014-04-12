@@ -33,6 +33,9 @@ public class Addition {
 					int oct = byteArrayToInt(buffer);
 					list1.add(oct);// Ajout de la valeur � la liste
 				}
+				int m1=(list1.get(0)+list1.get(1)+list1.get(2)+list1.get(3)+list1.get(4)+list1.get(5)+list1.get(6)+list1.get(7))/8;
+				list1.remove(0);
+				list1.add(0,m);
 			}
 			finally{
 				fis1.close();
@@ -50,6 +53,9 @@ public class Addition {
 					list2.add(o);// Ajout de la valeur � la liste
 					System.out.println(o);
 				}
+				int m2=(list2.get(0)+list2.get(1)+list2.get(2)+list2.get(3)+list2.get(4)+list2.get(5)+list2.get(6)+list2.get(7))/8;
+				list2.remove(0);
+				list2.add(0,m);
 			}
 			finally{
 				fis2.close();
