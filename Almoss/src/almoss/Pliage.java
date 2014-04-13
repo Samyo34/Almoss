@@ -9,6 +9,7 @@ public class Pliage {
 	File file;//R�cup�rer le fichier ouvert via la barre de menu
 	static FileInputStream fis;
 	static int byteLu;
+	static byte[] buffer = new byte[4];
 			
 			
 			
@@ -21,7 +22,7 @@ public class Pliage {
 		  ArrayList<Integer>list = new ArrayList<Integer>();//Liste contenant tous les points
 		  byte[] debut = new byte[256];
 		  fis=new FileInputStream(file);
-		  static byte[] buffer = new byte[4];
+		  
 		  int point;
 		  
 		  try{
@@ -109,6 +110,16 @@ public class Pliage {
 				source.delete();
 				return true; // R�sultat OK  
 			}
+		  public static int byteArrayToInt (byte[] b)
+		  {
+		      int value = 0;
+		      for (int i = 0; i < 4; i++)
+		      {
+		          int n = (b[i] < 0 ? (int) b[i] + 256 : (int)b[i]) << (8 * i);
+		          value += n;
+		      }
+		      return value;
+		  }
 
 }
 
