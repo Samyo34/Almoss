@@ -7,6 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
+import org.math.plot.Plot2DPanel;
+
 
 public class Soustraction {
 	
@@ -18,7 +22,7 @@ public class Soustraction {
 	static byte[] buffer2 = new byte[4];
 	
 	  //public static void main(String[] argv) throws IOException
-		public Soustraction(File file1, File file2, int type) throws IOException
+		public Soustraction(File file1, File file2, int type, JPanel graphe) throws IOException
 	  {
 		  
 		  /* **************Premier fichier**************** */
@@ -85,6 +89,10 @@ public class Soustraction {
 			  
 			  FileWriter soust = new FileWriter(sous);
 			  
+			  double[] x = new double[soustraction.size()];
+			  double[] y = new double[soustraction.size()];
+			  Plot2DPanel plot = new Plot2DPanel();
+			  
 			  /*for(int i =0;i<256;i++){
 				  soust.write(debut[i]);
 			  }*/
@@ -95,6 +103,9 @@ public class Soustraction {
 			  }
 			  
 			  soust.close();
+			  plot.addLinePlot("graphe",x,y);
+			  graphe.add(plot);
+			  graphe.repaint();
 		  }else{
 			  File sous = new File("addition.mcs");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.mcs");

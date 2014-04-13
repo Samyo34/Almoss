@@ -7,6 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
+import org.math.plot.Plot2DPanel;
+
 public class Addition {
 	
 	static FileInputStream fis1,fis2;
@@ -15,7 +19,7 @@ public class Addition {
 	static byte[] buffer2 = new byte[4];
 	
 	  //public static void main(String[] argv) throws IOException
-		public Addition(File file1, File file2, int type) throws IOException
+		public Addition(File file1, File file2, int type, JPanel graphe) throws IOException
 	  {
 		  
 		  /* **************Premier fichier**************** */
@@ -81,23 +85,32 @@ public class Addition {
 		  
 		  
 		  /*Ecriture dans un fichier */
-		  if (type == 0){
+		  if (type == 0){// Fichier Texte
 			  File sous = new File("addition.txt");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
 			  sous.createNewFile();
 			  //copyFile(sous,sousdest);
 			  
+			  double[] x = new double[addition.size()];
+			  double[] y = new double[addition.size()];
+			  Plot2DPanel plot = new Plot2DPanel();
+			  
 			  FileWriter soust = new FileWriter(sous);
 			  /*for(int i =0;i<256;i++){
 				  soust.write(debut[i]);
 			  }*/
-			  for (int i=0; i<addition.size();i++){
+			  for (int i=0; i<addition.size()-1;i++){
 					  soust.write(addition.get(i).toString());
+					  x[i] = (double)i;
+					  y[i]= (double) addition.get(i);
 					  soust.write("\r\n");  		  
 			  }
 			  
 			  soust.close();
-		  }else{
+			  plot.addLinePlot("graphe",x,y);
+			  graphe.add(plot);
+			  graphe.repaint();
+		  }else{ //Fichier mcs
 			  File sous = new File("soustraction.mcs");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
 			  sous.createNewFile();
@@ -107,7 +120,7 @@ public class Addition {
 			  for(int i =0;i<256;i++){
 				  soust.write(debut[i]);
 			  }
-			  for (int i=256; i<addition.size();i++){
+			  for (int i=256; i<addition.size()-1;i++){
 					  soust.write(addition.get(i));
 					  soust.write("\r\n");  		  
 			  }

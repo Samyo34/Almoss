@@ -7,13 +7,14 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
 public class ExecOpe extends JButton{
 	
 	File fich = new File("D:/1.MCS");
 	File fi2 = new File("D:/2.Mcs");
 
-	public ExecOpe(String s,final JComboBox box, final SelecFichier fich1, final SelecFichier fich2, final JComboBox type) throws IOException{
+	public ExecOpe(String s,final JComboBox box, final SelecFichier fich1, final SelecFichier fich2, final JComboBox type, final JPanel graphe) throws IOException{
 		super(s);
 		addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -21,14 +22,14 @@ public class ExecOpe extends JButton{
 					if (type.getSelectedItem()==".txt"){
 						try {
 							System.out.println(fich1.getFichier().getAbsolutePath());
-							Addition add = new Addition(fich1.getFichier(),fich2.getFichier(),0);
+							Addition add = new Addition(fich1.getFichier(),fich2.getFichier(),0,graphe);
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();
 						}
 					}else{
 						try {
-							Addition add = new Addition(fich1.getFichier(),fich2.getFichier(),1);
+							Addition add = new Addition(fich1.getFichier(),fich2.getFichier(),1,graphe);
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();
@@ -38,14 +39,14 @@ public class ExecOpe extends JButton{
 				}else{
 					if (type.getSelectedItem()==".txt"){
 						try {
-							Soustraction add = new Soustraction(fich1.getFichier(),fich2.getFichier(),0);
+							Soustraction add = new Soustraction(fich1.getFichier(),fich2.getFichier(),0,graphe);
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();
 						}
 					}else{
 						try {
-							Soustraction add = new Soustraction(fich1.getFichier(),fich2.getFichier(),1);
+							Soustraction add = new Soustraction(fich1.getFichier(),fich2.getFichier(),1,graphe);
 						} catch (IOException e1) {
 
 							e1.printStackTrace();
