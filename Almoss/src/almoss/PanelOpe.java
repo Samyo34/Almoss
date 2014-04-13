@@ -3,6 +3,7 @@ package almoss;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -27,12 +28,11 @@ public class PanelOpe extends JPanel{
 	
 	
 	
-	
 	public PanelOpe() throws IOException{
 		
 		SelecFichier ouvr1 = new SelecFichier("Selection Fichier 1",this,1); // Bouton offrant la possiblit� d'ouvrire le premier fichier
 		SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblit� d'ouvrire le second fichier
-		ExecOpe ope = new ExecOpe("Operation",choixOpe,ouvr1.getFichier(),ouvr2.getFichier(),type);
+		ExecOpe ope = new ExecOpe("Operation",choixOpe,ouvr1,ouvr2,type);
 		
 		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'op�ration
 		JPanel panelSelec = new JPanel();// Panel pour inserer les elements de selection de fichier
