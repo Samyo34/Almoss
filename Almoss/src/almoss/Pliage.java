@@ -2,6 +2,10 @@ package almoss;
 import java.io.*;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
+import org.math.plot.Plot2DPanel;
+
 //Pour l'instant le pliage prend 512 points et le replie donc en 256 au centre
 //Devra �tre am�lior� en pouvant changer le point de pli(de sym�trie)
 
@@ -17,7 +21,7 @@ public class Pliage {
 		this.file=file;
 	}
 	
-		public void pli(File file) throws IOException //M�thode de pli 
+		public void pli(File file, JPanel graphe) throws IOException //M�thode de pli 
 		{
 		  ArrayList<Integer>list = new ArrayList<Integer>();//Liste contenant tous les points
 		  byte[] debut = new byte[256];
@@ -43,7 +47,8 @@ public class Pliage {
 			}
 			
 		  
-			int size=list.size();//Doit �tre pair sinon erreur dans les boucles for
+			int size=list.size()-1;//Doit �tre pair sinon erreur dans les boucles for
+			System.out.println(size);
 			int moitie1[]=new int[size/2];//Premi�re moiti� avant le pli
 			int moitie2[]=new int[size/2];//Seconde moiti� avant le pli
 			int pli_tab[]=new int[size/2];//R�sultat du pli
@@ -53,8 +58,8 @@ public class Pliage {
 			for(int i=0;i<size/2;i++)
 			{
 				moitie1[i]=list.get(i);//Lit la premiere moiti� des points
-				moitie2[i]=list.get(i+size/2);//Lit la seconde moiti� des points
-				point = (int)(moitie1[i]+moitie2[size-i])/2;//Calcule la moyenne des 2 points oppos�s avant le pli
+				moitie2[i]=list.get(size-i);//Lit la seconde moiti� des points
+				point = (int)(moitie1[i]+moitie2[i])/2;//Calcule la moyenne des 2 points oppos�s avant le pli
 				pli_tab[i]=point;
 			}
 			
@@ -64,18 +69,28 @@ public class Pliage {
 				  pli.createNewFile();
 				  copyFile(pli,plidest);
 				  
+				  double[] x = new double[list.size()];
+				  double[] y = new double[list.size()];
+				  Plot2DPanel plot = new Plot2DPanel();
+				  
 				  FileWriter writer = new FileWriter(pli);
 				  
 				  for(int i =0;i<256;i++){
 					  writer.write(debut[i]);
 				  }
 				  
-				  for (int i=256; i<list.size();i++){
+				  for (int i=256; i<list.size()-1;i++){
 					  writer.write(list.get(i).toString());
-					  writer.write("\r\n");  		  
+					  writer.write("\r\n");
+					  x[i-256] = (double)i-256;
+					  y[i-256]= (double) list.get(i);
+					  System.out.println(y[i-256]);
 				  }
 				  
 				  writer.close();
+				  plot.addLinePlot("graphe",x,y);
+				  graphe.add(plot);
+				  graphe.repaint();
 		}
 
 		
