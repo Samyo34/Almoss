@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,13 +30,15 @@ public class PanelOpe extends JPanel{
 	
 	JPanel panelGraphe = new JPanel(); // Panel qui contient le graphe
 	
+	ArrayList<File>listFichier = new ArrayList<File>();
+	
 	
 	
 	public PanelOpe() throws IOException{
 		
-		SelecFichier ouvr1 = new SelecFichier("Selection Fichier 1",this,1); // Bouton offrant la possiblit� d'ouvrire le premier fichier
-		SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblit� d'ouvrire le second fichier
-		ExecOpe ope = new ExecOpe("Operation",choixOpe,ouvr1,ouvr2,type,panelGraphe);
+		SelecFichier ouvr1 = new SelecFichier("Ajouter un fichier",this,1,listFichier); // Bouton offrant la possiblit� d'ouvrir un fichier
+		//SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblit� d'ouvrir le second fichier
+		ExecOpe ope = new ExecOpe("Operation",choixOpe,listFichier,type,panelGraphe);
 		
 		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'op�ration
 		JPanel panelSelec = new JPanel();// Panel pour inserer les elements de selection de fichier
@@ -71,8 +74,7 @@ public class PanelOpe extends JPanel{
 		
 		panelSelec.add(ouvr1);
 		panelSelec.add(valide1);
-		panelSelec.add(ouvr2);
-		panelSelec.add(valide2);
+
 		
 		
 		this.setLayout(new GridLayout(2, 1));

@@ -19,13 +19,15 @@ public class Addition {
 	static byte[] buffer2 = new byte[4];
 	
 	  //public static void main(String[] argv) throws IOException
-		public Addition(File file1, File file2, int type, JPanel graphe) throws IOException
-	  {
+		//public Addition(File file1, File file2, int type, JPanel graphe) throws IOException
+		public Addition(ArrayList<File> listFichier, int type, JPanel graphe) throws IOException{
+			
+			
 		  
 		  /* **************Premier fichier**************** */
 		  ArrayList<Integer>list1 = new ArrayList<Integer>();
 		  byte[] debut = new byte[256];
-		  fis1=new FileInputStream(file1);
+		  fis1=new FileInputStream(listFichier.get(0));
 		  
 		  try{
 			  	//fis1.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
@@ -47,41 +49,60 @@ public class Addition {
 		  
 		  
 		  
+		  
 		  /* ***************Second fichier******************* */
+		  ArrayList<ArrayList> listDeList = new ArrayList<ArrayList>();
 		  ArrayList<Integer>list2 = new ArrayList<Integer>();
-		  fis2=new FileInputStream(file2);
-		  try{
-			  	fis2.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
-				while((byteLu=fis2.read(buffer))!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
-					int o = byteArrayToInt(buffer);
-					list2.add(o);// Ajout de la valeur � la liste
-					System.out.println(o);
+
+		  for(int i=1; i<listFichier.size();i++){
+			  list2.clear();
+			  fis2=new FileInputStream(listFichier.get(i));
+			  try{
+				  	fis2.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
+					while((byteLu=fis2.read(buffer))!=-1){// Lecture du fichier jusqu'au bout, octet par octet (8 bytes)
+						int o = byteArrayToInt(buffer);
+						list2.add(o);// Ajout de la valeur � la liste
+					}
+					int m2=(list2.get(0)+list2.get(1)+list2.get(2)+list2.get(3)+list2.get(4)+list2.get(5)+list2.get(6)+list2.get(7))/8;
+					list2.remove(0);
+					list2.add(0,m2);
+					listDeList.add(list2);
 				}
-				int m2=(list2.get(0)+list2.get(1)+list2.get(2)+list2.get(3)+list2.get(4)+list2.get(5)+list2.get(6)+list2.get(7))/8;
-				list2.remove(0);
-				list2.add(0,m2);
-			}
-			finally{
-				fis2.close();
-			}
+				finally{
+					fis2.close();
+				}
+			  
+		  }
+		  
+		  
+		  
 		  
 		  fis1.close();
-		  fis2.close();
 		  
 		  
 		  
 		  /* ****************Addition******************* */
 		  ArrayList<Integer>addition = new ArrayList<Integer>();
 		  int taille;
-		  if(list1.size()>list2.size()){
+		  /*if(list1.size()>list2.size()){
 			  taille = list2.size();
 		  }else{
 			  taille= list1.size();
+		  }*/
+
+		  for (int x=0;x<list1.size()-1;x++){
+			  addition.add(list1.get(x));
 		  }
 		  
-		  for(int i = 0; i<taille;i++){
-			  addition.add(list1.get(i)+list2.get(i));
+		  for(int i = 0; i<listDeList.size();i++){
+			  for (int y =0;y<listDeList.get(i).size()-1;y++){
+				  int val = (int) listDeList.get(i).get(y);
+				  int somme = addition.get(y) + val;
+				  addition.set(y, somme);
+			  }
 		  }
+			  
+		  
 		  
 		  
 		  /*Ecriture dans un fichier */
@@ -108,6 +129,7 @@ public class Addition {
 			  
 			  soust.close();
 			  plot.addLinePlot("graphe",x,y);
+			  graphe.removeAll();
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{ //Fichier mcs
@@ -128,6 +150,7 @@ public class Addition {
 			  soust.close();
 			  
 		  }
+		  listFichier.clear();
 	  }
 	  
 	  public static boolean copyFile(File source, File dest){

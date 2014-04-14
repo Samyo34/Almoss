@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,8 +15,9 @@ public class SelecFichier extends JButton{
 	public File fichier;
 	JFileChooser choix;
 	int returnVal;
+	static ArrayList<File> listF;
 	
-	public SelecFichier(String s, final PanelOpe pane, final int num){
+	public SelecFichier(String s, final PanelOpe pane, final int num, final ArrayList<File> list){
 		super(s);
 		this.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -24,6 +26,8 @@ public class SelecFichier extends JButton{
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK ou annuler (ou autres...)
 				
 				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration du fichier s�l�ctionner
+				list.add(fichier);
+				listF=list;
 				if (returnVal == JFileChooser.APPROVE_OPTION){
 					 pane.changeCouleur(num);
 				}
@@ -48,5 +52,9 @@ public class SelecFichier extends JButton{
 	public File getFichier(){
 		return this.fichier;
 		
+	}
+	
+	public ArrayList<File> getListF(){
+		return listF;
 	}
 }
