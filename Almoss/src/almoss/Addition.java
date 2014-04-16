@@ -103,7 +103,9 @@ public class Addition {
 		  }
 			  
 		  
-		  
+		  double[] x = new double[addition.size()-1];
+		  double[] y = new double[addition.size()-1];
+		  Plot2DPanel plot = new Plot2DPanel();
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){// Fichier Texte
@@ -112,9 +114,7 @@ public class Addition {
 			  sous.createNewFile();
 			  //copyFile(sous,sousdest);
 			  
-			  double[] x = new double[addition.size()];
-			  double[] y = new double[addition.size()];
-			  Plot2DPanel plot = new Plot2DPanel();
+			  
 			  
 			  FileWriter soust = new FileWriter(sous);
 			  /*for(int i =0;i<256;i++){
@@ -127,13 +127,14 @@ public class Addition {
 					  soust.write("\r\n");  		  
 			  }
 			  
+			  
 			  soust.close();
 			  plot.addLinePlot("graphe",x,y);
 			  graphe.removeAll();
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{ //Fichier mcs
-			  File sous = new File("soustraction.mcs");
+			  File sous = new File("addition.mcs");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
 			  sous.createNewFile();
 			  //copyFile(sous,sousdest);
@@ -144,10 +145,16 @@ public class Addition {
 			  }
 			  for (int i=256; i<addition.size()-1;i++){
 					  soust.write(addition.get(i));
+					  x[i] = (double)i;
+					  y[i]= (double) addition.get(i);
 					  soust.write("\r\n");  		  
 			  }
 			  
 			  soust.close();
+			  plot.addLinePlot("graphe",x,y);
+			  graphe.removeAll();
+			  graphe.add(plot);
+			  graphe.repaint();
 			  
 		  }
 		  listFichier.clear();

@@ -92,12 +92,14 @@ public class Soustraction {
 		  for(int i = 0; i<listDeList.size();i++){
 			  for (int y =0;y<listDeList.get(i).size()-1;y++){
 				  int val = (int) listDeList.get(i).get(y);
-				  System.out.println(val);
 				  diff = (int)(soustraction.get(y) - val);
 				  soustraction.set(y,diff);
 			  }
 		  }
 		  
+		  double[] x = new double[soustraction.size()-1];
+		  double[] y = new double[soustraction.size()-1];
+		  Plot2DPanel plot = new Plot2DPanel();
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){
@@ -107,16 +109,9 @@ public class Soustraction {
 			  copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
+			  System.out.println(soustraction.size());
 			  
-			  double[] x = new double[soustraction.size()];
-			  double[] y = new double[soustraction.size()];
-			  Plot2DPanel plot = new Plot2DPanel();
-			  
-			  /*for(int i =0;i<256;i++){
-				  soust.write(debut[i]);
-			  }*/
-			  
-			  for (int i=0; i<soustraction.size();i++){
+			  for (int i=0; i<soustraction.size()-1;i++){
 				  soust.write(soustraction.get(i).toString());
 				  x[i] = (double)i;
 				  y[i]= (double) soustraction.get(i);
@@ -129,21 +124,29 @@ public class Soustraction {
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{
-			  File sous = new File("addition.mcs");
+			  File sous = new File("soustraction.mcs");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.mcs");
 			  sous.createNewFile();
 			  copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
+			  
 			  for(int i =0;i<256;i++){
+
 				  soust.write(debut[i]);
 			  }
-			  for (int i=256; i<soustraction.size();i++){
+			  for (int i=256; i<soustraction.size()-1;i++){
 				  soust.write(soustraction.get(i));
+				  x[i] = (double)i;
+				  y[i]= (double) soustraction.get(i);
 				  soust.write("\r\n");  		  
 			  }
 			  
 			  soust.close();
+			  plot.addLinePlot("graphe",x,y);
+			  graphe.removeAll();
+			  graphe.add(plot);
+			  graphe.repaint();
 			  
 		  }
 	  }
