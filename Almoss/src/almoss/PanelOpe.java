@@ -29,6 +29,7 @@ public class PanelOpe extends JPanel{
 	JComboBox type = new JComboBox(); // choix du type de fichier sortit
 	
 	JPanel panelGraphe = new JPanel(); // Panel qui contient le graphe
+	JPanel panelList = new JPanel();// Panel affichant les fichiers sélectionés
 	
 	ArrayList<File>listFichier = new ArrayList<File>();
 	
@@ -36,16 +37,17 @@ public class PanelOpe extends JPanel{
 	
 	public PanelOpe() throws IOException{
 		
-		SelecFichier ouvr1 = new SelecFichier("Ajouter un fichier",this,1,listFichier); // Bouton offrant la possiblitï¿½ d'ouvrir un fichier
-		//SelecFichier ouvr2 = new SelecFichier("Selection Fichier 2",this,2); // Bouton offrant la possiblitï¿½ d'ouvrir le second fichier
-		ExecOpe ope = new ExecOpe("Operation",choixOpe,listFichier,type,panelGraphe);
+		SelecFichier ouvr1 = new SelecFichier("Ajouter un fichier",this,1,listFichier,panelList); // Bouton offrant la possiblitï¿½ d'ouvrir un fichier
+		ExecOpe ope = new ExecOpe("Operation",choixOpe,listFichier,type,panelGraphe); // Bouton exécutant les opérations
+		
 		
 		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'opï¿½ration
 		JPanel panelSelec = new JPanel();// Panel pour inserer les elements de selection de fichier
 		JPanel panelGroup = new JPanel(); // Panel qui regroupe panelChoix et panelSelec
 		
-		panelGroup.setLayout(new GridLayout(2,1));
+		panelGroup.setLayout(new GridLayout(3,1));
 		panelGroup.add(panelSelec);
+		panelGroup.add(panelList);
 		panelGroup.add(panelChoix);
 		
 		panelGraphe.setBorder(new javax.swing.border.BevelBorder(BevelBorder.RAISED));

@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 //Pour obtenir la liste des fichiers selectionnés 
 import java.beans.PropertyChangeEvent;
@@ -20,9 +22,9 @@ public class SelecFichier extends JButton {
 	JFileChooser choix;
 	int returnVal;
 	static ArrayList<File> listF;
+	File[] files;
 
-	public SelecFichier(String s, final PanelOpe pane, final int num,
-			final ArrayList<File> list) {
+	public SelecFichier(String s, final PanelOpe pane, final int num,final ArrayList<File> list, final JPanel panFich) {
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -40,13 +42,13 @@ public class SelecFichier extends JButton {
 							File[] newFiles = (File[]) evt.getNewValue();
 
 							// Obtenir la liste des fichiers sélectionnés
-							File[] files = choix.getSelectedFiles();
+							files = choix.getSelectedFiles();
 							/*
 							 * --Afficher la liste des fichiers sélectionnés
 							 * 
 							 * for(int i=0;i<files.length;i++){
 							 * System.out.println(files[i]);
-							 * 
+							 *
 							 * }
 							 */
 
@@ -59,12 +61,20 @@ public class SelecFichier extends JButton {
 														// des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqué sur OK
 				// ou annuler (ou autres...)
-
-				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Rï¿½cupï¿½ration
-																				// du
-																				// fichier
-																				// sï¿½lï¿½ctionner
-				list.add(fichier);
+				for(int i=0;i<files.length;i++){
+					fichier = new File(files[i].getAbsolutePath()); // Rï¿½cupï¿½ration du fichier sï¿½lï¿½ctionner
+					list.add(fichier);
+				}
+				String s = ""; //Pour stocker la liste des fichiers (dans le but de les afficher)
+				for (int i=0; i<list.size();i++){
+					
+					s = s + list.get(i).getAbsolutePath() + " , ";
+				}
+				JLabel listFich = new JLabel(s);
+				panFich.removeAll();
+				panFich.add(listFich);
+				panFich.repaint();
+				
 				listF = list;
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					pane.changeCouleur(num);
