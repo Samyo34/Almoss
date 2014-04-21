@@ -22,8 +22,5 @@ public class FenetreAlmoss extends JFrame{
 	    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
-	public void changeTextOnglet(int num, String s){
-		onglets.changeText(num,s);
-	}
 
 }

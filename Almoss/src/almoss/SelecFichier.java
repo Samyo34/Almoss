@@ -104,6 +104,27 @@ public class SelecFichier extends JButton {
 		});
 
 	}
+	
+	public SelecFichier(String s, final PanelFit pane, final int num){
+		super(s);
+		this.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choix = new JFileChooser();
+				choix.setMultiSelectionEnabled(true);
+
+				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
+														// fenetre de selection
+														// des fichiers
+				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
+				// ou annuler (ou autres...)
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration
+																				// du
+																				// fichier
+																				// s�l�ctionner
+			}
+		});
+		
+	}
 
 	public File getFichier() {
 		return this.fichier;

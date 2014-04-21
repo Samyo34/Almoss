@@ -107,28 +107,40 @@ public class Addition {
 		  double[] y = new double[addition.size()-1];
 		  Plot2DPanel plot = new Plot2DPanel();
 		  
+		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){// Fichier Texte
-			  File sous = new File("addition.txt");
+			  File add = new File("addition.txt");
+			  File addDat = new File("addition.dat");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
-			  sous.createNewFile();
+			  add.createNewFile();
+			  addDat.createNewFile();
 			  //copyFile(sous,sousdest);
 			  
 			  
 			  
-			  FileWriter soust = new FileWriter(sous);
-			  /*for(int i =0;i<256;i++){
-				  soust.write(debut[i]);
-			  }*/
+			  FileWriter addi = new FileWriter(add);
+			  FileWriter addiDat = new FileWriter(addDat);
+			  
+			  addiDat.write("#");
+			  addiDat.write("\r\n");
+			  
 			  for (int i=0; i<addition.size()-1;i++){
-					  soust.write(addition.get(i).toString());
-					  x[i] = (double)i;
+				  // Ecriture dans le fichier txt
+					  addi.write(addition.get(i).toString());
+				// Récupréation des données pour le traçage de la courbe
+					  x[i] = (double)i;					  
 					  y[i]= (double) addition.get(i);
-					  soust.write("\r\n");  		  
+					  addi.write("\r\n");
+				// Ecriture des données dans le fichier dat
+					  addiDat.write(i+"	"+";"+"	"+addition.get(i).toString() + "\r\n");
 			  }
 			  
+
+
 			  
-			  soust.close();
+			  addiDat.close();
+			  addi.close();
 			  plot.addLinePlot("graphe",x,y);
 			  graphe.removeAll();
 			  graphe.add(plot);

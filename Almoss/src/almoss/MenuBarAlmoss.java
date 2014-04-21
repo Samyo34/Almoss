@@ -13,18 +13,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class MenuBarAlmoss extends JMenuBar{
-	JMenuItem ouvrir;
-	JFileChooser choix;
+	JMenuItem ouvrir,para;
+	JFileChooser choix,choixpara;
 	int returnVal;
-	File file ;
+	File file,filePara ;
 	boolean filesel = false; // indique si l'utilisateur � selectionner un fichier
 	
 	public MenuBarAlmoss(final FenetreAlmoss fen) throws FileNotFoundException{
 		super();
-		JMenu fichier, edition;
+		JMenu fichier, param;
 		/* Création des menus */
 		fichier = new JMenu("Fichier");
-		edition = new JMenu("Edition");// vide pour le moment
+		param = new JMenu("Parametres");// vide pour le moment
 		
 		/* Création des elements contenu dans les menus */
 		ouvrir = new JMenuItem("Ouvrir...");
@@ -36,8 +36,16 @@ public class MenuBarAlmoss extends JMenuBar{
 				file = choix.getSelectedFile(); // R�cup�ration du fichier s�l�ctionner
 				if (returnVal == JFileChooser.APPROVE_OPTION){
 					filesel = true;
-					fen.changeTextOnglet(1, getFileName());
 				}
+			}
+		});
+		
+		para = new JMenuItem("Fichier param�tre (.par)");
+		para.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				choixpara = new JFileChooser();
+				choixpara.showOpenDialog(null);
+				filePara = choixpara.getSelectedFile();
 			}
 		});
 		
@@ -45,10 +53,13 @@ public class MenuBarAlmoss extends JMenuBar{
 		
 		/* Ajout des items au menu */
 		fichier.add(ouvrir);
+		param.add(para);
+		
+		
 		
 		/* Ajouts des menus à la barre de menu */
 		this.add(fichier);
-		this.add(edition);
+		this.add(param);
 	
 	
 	}
@@ -59,6 +70,10 @@ public class MenuBarAlmoss extends JMenuBar{
 		}else{
 			return "Aucun fichier selectionné";
 		}
+	}
+	
+	public File getFilePara(){
+		return this.filePara;
 	}
 
 	
