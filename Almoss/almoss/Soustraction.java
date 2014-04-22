@@ -119,7 +119,7 @@ public class Soustraction {
 			  }
 			  
 			  soust.close();
-			  plot.addLinePlot("graphe",x,y);
+			  plot.addScatterPlot("graphe",x,y);
 			  graphe.removeAll();
 			  graphe.add(plot);
 			  graphe.repaint();
@@ -143,7 +143,7 @@ public class Soustraction {
 			  }
 			  
 			  soust.close();
-			  plot.addLinePlot("graphe",x,y);
+			  plot.addScatterPlot("graphe",x,y);
 			  graphe.removeAll();
 			  graphe.add(plot);
 			  graphe.repaint();
