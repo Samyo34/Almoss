@@ -1,28 +1,45 @@
 package almoss;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+
+
+
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+
+
+
+
 
 
 //Pour obtenir la liste des fichiers selectionnés 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SelecFichier extends JButton {
+public class SelecFichier extends JButton implements ListSelectionListener {
 	public File fichier;
 	JFileChooser choix;
 	int returnVal;
 	static ArrayList<File> listF;
 	File[] files;
+	JList listClick;
 
 	public SelecFichier(String s, final PanelOpe pane, final int num,final ArrayList<File> list, final JPanel panFich) {
 		super(s);
@@ -62,17 +79,47 @@ public class SelecFichier extends JButton {
 				// returnVal permet de tester si l'utilisateur a cliqué sur OK
 				// ou annuler (ou autres...)
 				for(int i=0;i<files.length;i++){
-					fichier = new File(files[i].getAbsolutePath()); // Rï¿½cupï¿½ration du fichier sï¿½lï¿½ctionner
+					fichier = new File(files[i].getAbsolutePath()); // Recuperation du fichier selectionner
 					list.add(fichier);
 				}
-				String s = ""; //Pour stocker la liste des fichiers (dans le but de les afficher)
+				String[] s = new String[list.size()]; //Pour stocker la liste des fichiers (dans le but de les afficher)
+				
+				/* On passe par un Modele pour contstruire la liste */
+				DefaultListModel model = new DefaultListModel();
 				for (int i=0; i<list.size();i++){
-					
-					s = s + list.get(i).getAbsolutePath() + " , ";
+					model.addElement(list.get(i).getName());
 				}
-				JLabel listFich = new JLabel(s);
+				
+				// Ajout du Model ) la list
+				listClick = new JList(model);
+				final JScrollPane scroll = new JScrollPane();
+				scroll.setViewportView(listClick);
+				panFich.add(scroll);
+				
+				
+				listClick.setBackground(panFich.getBackground());
+				
+				listClick.addListSelectionListener(new ListSelectionListener(){
+					public void valueChanged(ListSelectionEvent arg0) {
+						if(listClick.getValueIsAdjusting() && !listClick.isSelectionEmpty()){
+							// Récupération du Model de la list
+							DefaultListModel model2 = (DefaultListModel) listClick.getModel();
+							litList(list);
+							// Suppréssion de l'élement séléctioné
+							list.remove(model2.indexOf(listClick.getSelectedValue()));
+							litList(list);
+							model2.remove(listClick.getSelectedIndex());
+							
+							// Affectation du nouveau model (donc nouvelle list)
+							listClick.setModel(model2);
+							panFich.remove(scroll);
+							panFich.add(scroll);
+							panFich.repaint();
+						}
+					}
+				});
 				panFich.removeAll();
-				panFich.add(listFich);
+				panFich.add(scroll);
 				panFich.repaint();
 				
 				listF = list;
@@ -133,5 +180,18 @@ public class SelecFichier extends JButton {
 
 	public ArrayList<File> getListF() {
 		return listF;
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent arg0) {
+		//listClick.remove(listClick.getAnchorSelectionIndex());
+		
+	}
+	
+	public void litList(ArrayList<File> list){
+		for(int i=0; i<list.size();i++){
+			System.out.print(list.get(i) + " * ");
+		}
+		System.out.println();
 	}
 }

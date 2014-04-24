@@ -2,6 +2,7 @@ package almoss;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.SpringLayout;
 import javax.swing.border.BevelBorder;
 
 /* 
@@ -36,19 +39,25 @@ public class PanelOpe extends JPanel{
 	
 	
 	public PanelOpe() throws IOException{
-		
 		SelecFichier ouvr1 = new SelecFichier("Ajouter un fichier",this,1,listFichier,panelList); // Bouton offrant la possiblitï¿½ d'ouvrir un fichier
 		ExecOpe ope = new ExecOpe("Operation",choixOpe,listFichier,type,panelGraphe); // Bouton exécutant les opérations
 		
 		
-		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'opï¿½ration
+		JPanel panelChoix = new JPanel();// Panel pour inserer les elements de choix de l'operation
+		JPanel panelFich = new JPanel(); //Panel pour regrouper panelSelec et panelList
 		JPanel panelSelec = new JPanel();// Panel pour inserer les elements de selection de fichier
-		JPanel panelGroup = new JPanel(); // Panel qui regroupe panelChoix et panelSelec
+		JPanel panelGroup = new JPanel(); // Panel qui regroupe panelFich et panelChoix
 		
-		panelGroup.setLayout(new GridLayout(3,1));
-		panelGroup.add(panelSelec);
-		panelGroup.add(panelList);
-		panelGroup.add(panelChoix);
+		
+		
+		panelFich.setLayout(new BorderLayout());
+		panelFich.add(panelSelec, BorderLayout.NORTH);
+		panelFich.add(panelList, BorderLayout.CENTER);
+
+		
+		panelGroup.setLayout(new BorderLayout());
+		panelGroup.add(panelFich,BorderLayout.CENTER);
+		panelGroup.add(panelChoix, BorderLayout.SOUTH);
 		
 		panelGraphe.setBorder(new javax.swing.border.BevelBorder(BevelBorder.RAISED));
 		panelGraphe.setLayout(new GridLayout());
@@ -78,8 +87,9 @@ public class PanelOpe extends JPanel{
 		panelSelec.add(valide1);
 
 		
+		GridLayout gridL = new GridLayout(2,1);
 		
-		this.setLayout(new GridLayout(2, 1));
+		this.setLayout(gridL);
 		this.add(panelGroup);
 		this.add(panelGraphe);
 
