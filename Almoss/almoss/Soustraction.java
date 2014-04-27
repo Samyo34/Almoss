@@ -104,20 +104,27 @@ public class Soustraction {
 		  /*Ecriture dans un fichier */
 		  if (type == 0){
 			  File sous = new File("soustraction.txt");
+			  File sousDat = new File("soustraction.dat");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.txt");
 			  sous.createNewFile();
+			  sousDat.createNewFile();
 			  copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
-			  System.out.println(soustraction.size());
+			  FileWriter soustDat = new FileWriter(sousDat);
+			  
+			  soustDat.write("#");
+			  soustDat.write("\r\n");
 			  
 			  for (int i=0; i<soustraction.size()-1;i++){
 				  soust.write(soustraction.get(i).toString());
 				  x[i] = (double)i;
 				  y[i]= (double) soustraction.get(i);
-				  soust.write("\r\n");  		  
+				  soust.write("\r\n");
+				  soustDat.write(i+"	"+";"+"	"+soustraction.get(i).toString() + "\r\n");
 			  }
 			  
+			  soustDat.close();
 			  soust.close();
 			  plot.addScatterPlot("graphe",x,y);
 			  graphe.removeAll();
@@ -125,11 +132,17 @@ public class Soustraction {
 			  graphe.repaint();
 		  }else{
 			  File sous = new File("soustraction.mcs");
+			  File sousDat = new File("soustraction.dat");
 			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.mcs");
 			  sous.createNewFile();
+			  sousDat.createNewFile();
 			  copyFile(sous,sousdest);
 			  
 			  FileWriter soust = new FileWriter(sous);
+			  FileWriter soustDat = new FileWriter(sousDat);
+			  
+			  soustDat.write("#");
+			  soustDat.write("\r\n");
 			  
 			  for(int i =0;i<256;i++){
 
@@ -139,9 +152,11 @@ public class Soustraction {
 				  soust.write(soustraction.get(i));
 				  x[i] = (double)i;
 				  y[i]= (double) soustraction.get(i);
-				  soust.write("\r\n");  		  
+				  soust.write("\r\n");
+				  soustDat.write(i+"	"+";"+"	"+soustraction.get(i).toString() + "\r\n");
 			  }
 			  
+			  soustDat.close();
 			  soust.close();
 			  plot.addScatterPlot("graphe",x,y);
 			  graphe.removeAll();

@@ -25,8 +25,6 @@ import javax.swing.border.BevelBorder;
 
 public class PanelOpe extends JPanel{
 	
-	private JCheckBox valide1 = new JCheckBox();
-	private JCheckBox valide2 = new JCheckBox();
 	
 	JComboBox choixOpe = new JComboBox();
 	JComboBox type = new JComboBox(); // choix du type de fichier sortit
@@ -64,12 +62,6 @@ public class PanelOpe extends JPanel{
 		
 		
 		
-		
-		valide1.setEnabled(false);
-		valide1.setFocusable(false);
-		valide2.setEnabled(false);
-		valide2.setFocusable(false);
-		
 		type.addItem(".txt");
 		type.addItem(".mcs");
 		
@@ -84,7 +76,6 @@ public class PanelOpe extends JPanel{
 		panelChoix.add(ope);
 		
 		panelSelec.add(ouvr1);
-		panelSelec.add(valide1);
 
 		
 		GridLayout gridL = new GridLayout(2,1);
@@ -95,19 +86,6 @@ public class PanelOpe extends JPanel{
 
 	}
 	
-	public void changeCouleur(int num){
-		/*
-		 * Change la couleur de la checkBox num�ros num
-		 * repaint ensuite
-		 */
-		
-		if (num == 1){
-			this.valide1.setForeground(Color.RED);
-			this.repaint();
-		}else{
-			this.valide2.setForeground(Color.RED);
-			this.repaint();
-		}
-	}
+	
 
 }

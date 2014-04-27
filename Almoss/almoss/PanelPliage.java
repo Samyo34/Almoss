@@ -14,16 +14,14 @@ public class PanelPliage extends JPanel {
 		JPanel pan = new JPanel(); // Panel contenant les boutons
 		JPanel panGroupe =  new JPanel();// Panel contenant le panel pan (facilite le positionnement)
 		
-		GridLayout grid = new GridLayout(2,3);
-		grid.setHgap(20);
-		grid.setVgap(20);
-		pan.setLayout(grid);
+		//BorderLayout grid = new BorderLayout();
+		//pan.setLayout(grid);
 		
 		SelecFichier ouvr = new SelecFichier("Selection Fichier",this,1); // Bouton offrant la possiblité d'ouvrire un fichier
 		ButtonPli pli = new ButtonPli("Plier !", ouvr, panGraphe);
 		
-		pan.add(ouvr);
-		pan.add(pli);
+		pan.add(ouvr, BorderLayout.NORTH);
+		pan.add(pli, BorderLayout.SOUTH);
 		
 		panGraphe.setBorder(new javax.swing.border.BevelBorder(BevelBorder.RAISED));
 		panGraphe.setLayout(new GridLayout());

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -29,6 +30,9 @@ import javax.swing.event.ListSelectionListener;
 
 
 
+
+import javax.swing.filechooser.FileFilter;
+
 //Pour obtenir la liste des fichiers selectionnés 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -40,6 +44,14 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 	static ArrayList<File> listF;
 	File[] files;
 	JList listClick;
+	
+	Filtre filtreMcs = new Filtre("Fichier mcs");
+	//filtreMcs.addExtension(".mcs");
+	//filtreMcs.addExtension(".MCS");
+	
+	Filtre filtreDat = new Filtre("Fichier dat");
+	//filtreDat.addExtension(".dat");
+	//filtreDat.addExtenion(".DAT");
 
 	public SelecFichier(String s, final PanelOpe pane, final int num,final ArrayList<File> list, final JPanel panFich) {
 		super(s);
@@ -123,9 +135,6 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				panFich.repaint();
 				
 				listF = list;
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					pane.changeCouleur(num);
-				}
 			}
 		});
 
@@ -170,6 +179,33 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 																				// sï¿½lï¿½ctionner
 			}
 		});
+		
+	}
+	
+	public SelecFichier(String s, final PanelAffiche affiche){ //Panel Affiche
+		super(s);
+		this.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choix = new JFileChooser();
+				choix.setMultiSelectionEnabled(true);
+				choix.addChoosableFileFilter(filtreMcs);
+				choix.addChoosableFileFilter(filtreMcs);
+				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
+														// fenetre de selection
+														// des fichiers
+				// returnVal permet de tester si l'utilisateur a cliquï¿½ sur OK
+				// ou annuler (ou autres...)
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Rï¿½cupï¿½ration du fichier selectionner
+				
+				try {
+					affiche.affGraphe(fichier);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		
 	}
 

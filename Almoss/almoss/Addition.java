@@ -50,7 +50,7 @@ public class Addition {
 		  
 		  
 		  
-		  /* ***************Second fichier******************* */
+		  /* ***************Autres fichiers******************* */
 		  ArrayList<ArrayList> listDeList = new ArrayList<ArrayList>();
 		  ArrayList<Integer>list2 = new ArrayList<Integer>();
 
@@ -112,7 +112,7 @@ public class Addition {
 		  if (type == 0){// Fichier Texte
 			  File add = new File("addition.txt");
 			  File addDat = new File("addition.dat");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
+			  File adddest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
 			  add.createNewFile();
 			  addDat.createNewFile();
 			  //copyFile(sous,sousdest);
@@ -146,23 +146,33 @@ public class Addition {
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{ //Fichier mcs
-			  File sous = new File("addition.mcs");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
-			  sous.createNewFile();
+			  File add = new File("addition.mcs");
+			  File addDat = new File("addition.dat");
+			  File adddest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
+			  add.createNewFile();
+			  addDat.createNewFile();
 			  //copyFile(sous,sousdest);
 			  
-			  FileWriter soust = new FileWriter(sous);
+			  FileWriter addi = new FileWriter(add);
+			  FileWriter addiDat = new FileWriter(addDat);
+			  
+			  addiDat.write("#");
+			  addiDat.write("\r\n");
+			  
 			  for(int i =0;i<256;i++){
-				  soust.write(debut[i]);
+				  addi.write(debut[i]);
 			  }
 			  for (int i=256; i<addition.size()-1;i++){
-					  soust.write(addition.get(i));
+					  addi.write(addition.get(i));
 					  x[i] = (double)i;
 					  y[i]= (double) addition.get(i);
-					  soust.write("\r\n");  		  
+					  addi.write("\r\n");  	
+					  // Ecriture des donnees dans le fichier dat
+					  addiDat.write(i+"	"+";"+"	"+addition.get(i).toString() + "\r\n");
 			  }
 			  
-			  soust.close();
+			  addiDat.close();
+			  addi.close();
 			  plot.addScatterPlot("graphe",x,y);
 			  graphe.removeAll();
 			  graphe.add(plot);
