@@ -1,5 +1,6 @@
 package almoss;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +35,9 @@ public class AfficheGraphe extends JPanel{
 				oct = byteArrayToInt(buffer);
 				valeurs.add(oct);	
 			}
+			int m=(valeurs.get(0)+valeurs.get(1)+valeurs.get(2)+valeurs.get(3)+valeurs.get(4)+valeurs.get(5)+valeurs.get(6)+valeurs.get(7))/8;
+			valeurs.remove(0);
+			valeurs.add(0,m);
 			double[] x = new double[valeurs.size()-1];
 			double[] y = new double[valeurs.size()-1];
 			
@@ -45,8 +49,10 @@ public class AfficheGraphe extends JPanel{
 			}
 			
 			plot.addScatterPlot("graphe", x, y);
+			pane.setLayout(new BorderLayout());
 			pane.removeAll();
-			pane.add(plot);
+			pane.add(plot, BorderLayout.CENTER);
+			pane.revalidate();
 			pane.repaint();
 			file.close();
 			

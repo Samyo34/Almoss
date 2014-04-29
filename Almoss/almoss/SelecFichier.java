@@ -33,7 +33,7 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.filechooser.FileFilter;
 
-//Pour obtenir la liste des fichiers selectionnés 
+//Pour obtenir la liste des fichiers selectionnï¿½s 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -59,7 +59,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser(".");
 				choix.setMultiSelectionEnabled(true);// Permet la selection
-														// simultanée de
+														// simultanï¿½e de
 														// plusieurs fichiers
 
 				choix.addPropertyChangeListener(new PropertyChangeListener() {
@@ -70,10 +70,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 							File[] oldFiles = (File[]) evt.getOldValue();
 							File[] newFiles = (File[]) evt.getNewValue();
 
-							// Obtenir la liste des fichiers sélectionnés
+							// Obtenir la liste des fichiers sï¿½lectionnï¿½s
 							files = choix.getSelectedFiles();
 							/*
-							 * --Afficher la liste des fichiers sélectionnés
+							 * --Afficher la liste des fichiers sï¿½lectionnï¿½s
 							 * 
 							 * for(int i=0;i<files.length;i++){
 							 * System.out.println(files[i]);
@@ -88,7 +88,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
 														// fenetre de selection
 														// des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqué sur OK
+				// returnVal permet de tester si l'utilisateur a cliquï¿½ sur OK
 				// ou annuler (ou autres...)
 				for(int i=0;i<files.length;i++){
 					fichier = new File(files[i].getAbsolutePath()); // Recuperation du fichier selectionner
@@ -114,10 +114,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				listClick.addListSelectionListener(new ListSelectionListener(){
 					public void valueChanged(ListSelectionEvent arg0) {
 						if(listClick.getValueIsAdjusting() && !listClick.isSelectionEmpty()){
-							// Récupération du Model de la list
+							// Rï¿½cupï¿½ration du Model de la list
 							DefaultListModel model2 = (DefaultListModel) listClick.getModel();
 							litList(list);
-							// Suppréssion de l'élement séléctioné
+							// Supprï¿½ssion de l'ï¿½lement sï¿½lï¿½ctionï¿½
 							list.remove(model2.indexOf(listClick.getSelectedValue()));
 							litList(list);
 							model2.remove(listClick.getSelectedIndex());
@@ -140,7 +140,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 	}
 
-	public SelecFichier(String s, final PanelPliage pane, final int num) {
+	public SelecFichier(String s, final PanelPliage pane, final int num, final JPanel pan) {
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,12 +156,19 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 																				// du
 																				// fichier
 																				// sï¿½lï¿½ctionner
+				AfficheGraphe graphe=new AfficheGraphe();
+				try {
+					graphe.CalculeGraphe(fichier,pan);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 	}
 	
-	public SelecFichier(String s, final PanelFit pane, final int num){
+	public SelecFichier(String s, final PanelFit pane, final int num, final JPanel pan){
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,6 +184,13 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 																				// du
 																				// fichier
 																				// sï¿½lï¿½ctionner
+				AfficheGraphe graphe=new AfficheGraphe();
+				try {
+					graphe.CalculeGraphe(fichier,pan);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
