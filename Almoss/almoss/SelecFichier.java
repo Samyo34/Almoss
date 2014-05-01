@@ -33,7 +33,7 @@ import javax.swing.event.ListSelectionListener;
 
 import javax.swing.filechooser.FileFilter;
 
-//Pour obtenir la liste des fichiers selectionn�s 
+//Pour obtenir la liste des fichiers selectionn�s
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -44,11 +44,12 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 	static ArrayList<File> listF;
 	File[] files;
 	JList listClick;
-	
+	File dir;
+
 	Filtre filtreMcs = new Filtre("Fichier mcs");
 	//filtreMcs.addExtension(".mcs");
 	//filtreMcs.addExtension(".MCS");
-	
+
 	Filtre filtreDat = new Filtre("Fichier dat");
 	//filtreDat.addExtension(".dat");
 	//filtreDat.addExtenion(".DAT");
@@ -58,9 +59,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser(".");
+				choix.setCurrentDirectory(dir);
 				choix.setMultiSelectionEnabled(true);// Permet la selection
-														// simultan�e de
-														// plusieurs fichiers
+				// simultan�e de
+				// plusieurs fichiers
 
 				choix.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent evt) {
@@ -72,9 +74,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 							// Obtenir la liste des fichiers s�lectionn�s
 							files = choix.getSelectedFiles();
+							dir = choix.getCurrentDirectory();
 							/*
 							 * --Afficher la liste des fichiers s�lectionn�s
-							 * 
+							 *
 							 * for(int i=0;i<files.length;i++){
 							 * System.out.println(files[i]);
 							 *
@@ -86,8 +89,8 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				});
 
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
-														// fenetre de selection
-														// des fichiers
+				// fenetre de selection
+				// des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
 				// ou annuler (ou autres...)
 				for(int i=0;i<files.length;i++){
@@ -95,22 +98,24 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 					list.add(fichier);
 				}
 				String[] s = new String[list.size()]; //Pour stocker la liste des fichiers (dans le but de les afficher)
-				
+
 				/* On passe par un Modele pour contstruire la liste */
 				DefaultListModel model = new DefaultListModel();
 				for (int i=0; i<list.size();i++){
 					model.addElement(list.get(i).getName());
 				}
-				
+
 				// Ajout du Model ) la list
 				listClick = new JList(model);
 				final JScrollPane scroll = new JScrollPane();
 				scroll.setViewportView(listClick);
 				panFich.add(scroll);
-				
-				
+				panFich.revalidate();
+				panFich.repaint();
+
+
 				listClick.setBackground(panFich.getBackground());
-				
+
 				listClick.addListSelectionListener(new ListSelectionListener(){
 					public void valueChanged(ListSelectionEvent arg0) {
 						if(listClick.getValueIsAdjusting() && !listClick.isSelectionEmpty()){
@@ -121,11 +126,12 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 							list.remove(model2.indexOf(listClick.getSelectedValue()));
 							litList(list);
 							model2.remove(listClick.getSelectedIndex());
-							
+
 							// Affectation du nouveau model (donc nouvelle list)
 							listClick.setModel(model2);
 							panFich.remove(scroll);
 							panFich.add(scroll);
+							panFich.revalidate();
 							panFich.repaint();
 						}
 					}
@@ -133,32 +139,31 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				panFich.removeAll();
 				panFich.add(scroll);
 				panFich.repaint();
-				
+
 				listF = list;
 			}
 		});
 
 	}
 
-	public SelecFichier(String s, final PanelPliage pane, final int num, final JPanel pan) {
+	public SelecFichier(String s, final PanelPliage pane, final int num) {
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser();
+				choix.setCurrentDirectory(dir);
 				choix.setMultiSelectionEnabled(true);
 
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
-														// fenetre de selection
-														// des fichiers
+				// fenetre de selection
+				// des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
 				// ou annuler (ou autres...)
-				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration
-																				// du
-																				// fichier
-																				// s�l�ctionner
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
+				dir = choix.getCurrentDirectory();
 				AfficheGraphe graphe=new AfficheGraphe();
 				try {
-					graphe.CalculeGraphe(fichier,pan);
+					graphe.CalculeGraphe(fichier,pane);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -167,50 +172,51 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 		});
 
 	}
-	
-	public SelecFichier(String s, final PanelFit pane, final int num, final JPanel pan){
+
+	public SelecFichier(String s, final JPanel pane, final int num){
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser();
+				choix.setCurrentDirectory(dir);
 				choix.setMultiSelectionEnabled(true);
 
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
-														// fenetre de selection
-														// des fichiers
+				// fenetre de selection
+				// des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
 				// ou annuler (ou autres...)
-				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration
-																				// du
-																				// fichier
-																				// s�l�ctionner
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
+				dir = choix.getCurrentDirectory();
 				AfficheGraphe graphe=new AfficheGraphe();
 				try {
-					graphe.CalculeGraphe(fichier,pan);
+					graphe.CalculeGraphe(fichier,pane);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		
+
 	}
-	
+
 	public SelecFichier(String s, final PanelAffiche affiche){ //Panel Affiche
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser();
+				choix.setCurrentDirectory(dir);
 				choix.setMultiSelectionEnabled(true);
 				choix.addChoosableFileFilter(filtreMcs);
 				choix.addChoosableFileFilter(filtreMcs);
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
-														// fenetre de selection
-														// des fichiers
+				// fenetre de selection
+				// des fichiers
 				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
 				// ou annuler (ou autres...)
-				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // R�cup�ration du fichier selectionner
-				
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
+				dir = choix.getCurrentDirectory();
+
 				try {
 					affiche.affGraphe(fichier);
 				} catch (FileNotFoundException e1) {
@@ -219,8 +225,8 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				}
 			}
 		});
-		
-		
+
+
 	}
 
 	public File getFichier() {
@@ -235,9 +241,9 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
 		//listClick.remove(listClick.getAnchorSelectionIndex());
-		
+
 	}
-	
+
 	public void litList(ArrayList<File> list){
 		for(int i=0; i<list.size();i++){
 			System.out.print(list.get(i) + " * ");
