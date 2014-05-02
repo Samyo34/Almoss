@@ -1,10 +1,12 @@
 package almoss;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -62,6 +64,68 @@ public class AfficheGraphe extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void calculeGrapheDat(File fichier, JPanel pane) throws IOException{
+		file = new FileInputStream(fichier.getAbsolutePath());
+		InputStreamReader fileStream =new InputStreamReader(file);
+		BufferedReader buffer=new BufferedReader(fileStream);
+		double[] x = new double[countRow(fichier)-1];
+		double[] y = new double[countRow(fichier)-1];
+		
+		buffer.readLine(); // On saute la première ligne
+		String ligne;
+		double[] tab = new double[2];
+		int i =0;
+		while((ligne = buffer.readLine()) != null){
+			tab = litValeur(ligne);
+			x[i] = tab[0];
+			y[i] = tab[1];
+			i++;
+
+		}
+		
+		plot.addScatterPlot("graphe", x, y);
+		pane.setLayout(new BorderLayout());
+		pane.removeAll();
+		pane.add(plot, BorderLayout.CENTER);
+		pane.revalidate();
+		pane.repaint();
+		file.close();
+		
+	}
+	
+	public int countRow(File fichier) throws IOException{
+		file = new FileInputStream(fichier.getAbsolutePath());
+		InputStreamReader fileStream =new InputStreamReader(file);
+		BufferedReader buffer=new BufferedReader(fileStream);
+		
+		String ligne;
+		int i =0;
+		while ((ligne = buffer.readLine()) != null){
+			i++;
+		}
+		return i;
+	}
+	
+	public double[] litValeur(String s){
+		double [] tab = new double[2];
+		int debut, fin;
+		double x,y;
+		String s1,s2;
+		debut = 0;
+		fin = s.indexOf("	");
+		s1=s.substring(debut, fin);
+		x = Double.valueOf(s1);
+		
+		debut = fin +2;
+		fin = s.length();
+		s2=s.substring(debut, fin);
+		y = Double.valueOf(s2);
+		
+		tab[0] = x;
+		tab[1]= y;
+		return tab;
 	}
 
 	public static int byteArrayToInt (byte[] b)

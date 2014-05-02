@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -40,8 +41,12 @@ public class PanelAffiche extends JPanel{
 		this.add(panGraphe,BorderLayout.CENTER);
 	}
 	
-	public void affGraphe(File fichier) throws FileNotFoundException{
-		graphe.CalculeGraphe(fichier, panGraphe);
+	public void affGraphe(File fichier) throws IOException{
+		if (fichier.getName().endsWith(".mcs") || fichier.getName().endsWith(".MCS")){
+			graphe.CalculeGraphe(fichier, panGraphe);
+		}else if(fichier.getName().endsWith(".dat") || fichier.getName().endsWith(".DAT")){
+			graphe.calculeGrapheDat(fichier, panGraphe);
+		}
 	}
 }
 

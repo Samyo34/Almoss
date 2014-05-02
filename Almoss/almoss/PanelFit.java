@@ -45,7 +45,8 @@ public class PanelFit extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				Runtime runtime = Runtime.getRuntime();
 				try {
-					Shell.system("E:\\Travail\\Projet_Almoss\\full\\fullham.exe " + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
+					int res = Shell.system("E:\\Travail\\Projet_Almoss\\full\\fullham.exe " + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
+					System.out.println(res);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -32,6 +33,7 @@ import javax.swing.event.ListSelectionListener;
 
 
 import javax.swing.filechooser.FileFilter;
+
 
 //Pour obtenir la liste des fichiers selectionn�s
 import java.beans.PropertyChangeEvent;
@@ -190,8 +192,11 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				dir = choix.getCurrentDirectory();
 				AfficheGraphe graphe=new AfficheGraphe();
 				try {
-					graphe.CalculeGraphe(fichier,pane);
+					graphe.calculeGrapheDat(fichier,pane);
 				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -220,6 +225,9 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				try {
 					affiche.affGraphe(fichier);
 				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
