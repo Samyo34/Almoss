@@ -42,7 +42,7 @@ public class PanelAffiche extends JPanel{
 	}
 	
 	public void affGraphe(File fichier) throws IOException{
-		if (fichier.getName().endsWith(".mcs") || fichier.getName().endsWith(".MCS")){
+		if (fichier.getName().endsWith(".mcs") || fichier.getName().endsWith(".MCS") || fichier.getName().endsWith(".Mcs")){
 			graphe.CalculeGraphe(fichier, panGraphe);
 		}else if(fichier.getName().endsWith(".dat") || fichier.getName().endsWith(".DAT")){
 			graphe.calculeGrapheDat(fichier, panGraphe);
