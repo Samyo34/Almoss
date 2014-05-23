@@ -55,6 +55,26 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 	Filtre filtreDat = new Filtre("Fichier dat");
 	//filtreDat.addExtension(".dat");
 	//filtreDat.addExtenion(".DAT");
+	
+	
+	public SelecFichier(String s){
+		super(s);
+		this.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choix = new JFileChooser();
+				choix.setCurrentDirectory(dir);
+				choix.setMultiSelectionEnabled(true);
+
+				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
+				// fenetre de selection
+				// des fichiers
+				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
+				// ou annuler (ou autres...)
+				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
+				dir = choix.getCurrentDirectory();
+			}
+		});
+	}
 
 	public SelecFichier(String s, final PanelOpe pane, final int num,final ArrayList<File> list, final JPanel panFich) {
 		super(s);
@@ -233,8 +253,50 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				}
 			}
 		});
+		
 
 
+	}
+	
+	public SelecFichier(String s , final PanelMulti pane){ // PanelMulti
+		super(s);
+		
+		this.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choix = new JFileChooser(".");
+				choix.setCurrentDirectory(dir);
+				choix.setMultiSelectionEnabled(true);// Permet la selection
+				// simultan�e de
+				// plusieurs fichiers
+
+				choix.addPropertyChangeListener(new PropertyChangeListener() {
+					public void propertyChange(PropertyChangeEvent evt) {
+						if (JFileChooser.SELECTED_FILES_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
+							JFileChooser choix = (JFileChooser) evt.getSource();
+							File[] oldFiles = (File[]) evt.getOldValue();
+							File[] newFiles = (File[]) evt.getNewValue();
+
+							// Obtenir la liste des fichiers s�lectionn�s
+							files = choix.getSelectedFiles();
+							dir = choix.getCurrentDirectory();
+							/*
+							 * --Afficher la liste des fichiers s�lectionn�s
+							 *
+							 * for(int i=0;i<files.length;i++){
+							 * System.out.println(files[i]);
+							 *
+							 * }
+							 */
+
+						}
+					}
+				});
+				returnVal = choix.showOpenDialog(null);
+				pane.addLines(files);
+			}
+		});
+		
+		
 	}
 
 	public File getFichier() {

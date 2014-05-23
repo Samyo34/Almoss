@@ -41,19 +41,7 @@ public class PanelFit extends JPanel{
 		
 		final SelecFichier ouvr = new SelecFichier("Selection Fichier",panGraphe,1); // Bouton offrant la possiblité d'ouvrire un fichier
 		
-		fit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				Runtime runtime = Runtime.getRuntime();
-				try {
-					int res = Shell.system("E:\\Travail\\Projet_Almoss\\full\\fullham.exe " + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
-					System.out.println(res);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			
-		});
+		
 		
 		panSelec.setLayout(new GridLayout());
 		panSelec.add(ouvr);
@@ -64,6 +52,18 @@ public class PanelFit extends JPanel{
 		this.setLayout(new BorderLayout());
 		this.add(pan, BorderLayout.NORTH);
 		this.add(panGraphe, BorderLayout.CENTER);
+		fit.addActionListener(new ActionListener(){
+			
+		public void actionPerformed(ActionEvent e) {
+			try {
+				int res = Shell.system("E:\\Travail\\Projet_Almoss\\full\\fullham.exe " + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+			
+		});
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 public class Almoss {
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		JFrame fenetre = new FenetreAlmoss();
+		FenetreAlmoss fenetre = FenetreAlmoss.getInstance();
 	}
 
 }

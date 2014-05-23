@@ -32,13 +32,13 @@ public class PanelAlmoss extends JPanel{
 		// Ajout d'un onglet (onglet 2)
 		onglet.addTab("Opération",null,ong2);
 		
-		// Ajout d'un onglet (onglet 3);
-		ong3=ongFit;
-		onglet.addTab("Fit", null, ong3);
-		
 		PanelAffiche ongGraphe = new PanelAffiche();
-		ong4 = ongGraphe;
-		onglet.addTab("Affichage", ong4);
+		ong3 = ongGraphe;
+		onglet.addTab("Affichage", ong3);
+		
+		PanelMulti ongMulti = new PanelMulti();
+		ong4= ongMulti;
+		onglet.addTab("Traiter plusieurs fichiers", ong4);
 		// Ajoute l'ensemble des onglets dans PanelAlmoss (en organisation GridLayout(1,1))
 		this.add(onglet);
 		setVisible(true);

@@ -16,8 +16,13 @@ public class MenuBarAlmoss extends JMenuBar{
 	JMenuItem ouvrir,para;
 	JFileChooser choix,choixpara;
 	int returnVal;
-	File file,filePara ;
+	File file;
+	static File filePara ;
 	boolean filesel = false; // indique si l'utilisateur � selectionner un fichier
+	
+	public MenuBarAlmoss(){
+		super();
+	}
 	
 	public MenuBarAlmoss(final FenetreAlmoss fen) throws FileNotFoundException{
 		super();
