@@ -27,10 +27,10 @@ public class PanelAffiche extends JPanel{
 		panGraphe.setBorder(new javax.swing.border.BevelBorder(BevelBorder.RAISED));
 		panGraphe.setLayout(new GridLayout());
 		
-		panBout.setLayout(new BorderLayout());
-		panBout.add(ouvr, BorderLayout.CENTER);
-		panBout.add(pan1, BorderLayout.EAST);
-		panBout.add(pan2, BorderLayout.WEST);
+		panBout.setLayout(new GridLayout(1,3));
+		panBout.add(pan1);
+		panBout.add(ouvr);
+		panBout.add(pan2);
 		
 		
 		panGroupe.setLayout(new GridLayout(2,1));

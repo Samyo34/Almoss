@@ -17,6 +17,8 @@ public class Addition {
 	static int byteLu;
 	static byte[] buffer = new byte[4];
 	static byte[] buffer2 = new byte[4];
+	//String curDir = System.getProperty("user.dir");
+	String curDir = "E:\\Travail\\Projet_Almoss\\Almoss";
 	
 	  //public static void main(String[] argv) throws IOException
 		//public Addition(File file1, File file2, int type, JPanel graphe) throws IOException
@@ -83,13 +85,6 @@ public class Addition {
 		  
 		  /* ****************Addition******************* */
 		  ArrayList<Integer>addition = new ArrayList<Integer>();
-		  int taille;
-		  /*if(list1.size()>list2.size()){
-			  taille = list2.size();
-		  }else{
-			  taille= list1.size();
-		  }*/
-
 		  for (int x=0;x<list1.size()-1;x++){
 			  addition.add(list1.get(x));
 		  }
@@ -110,9 +105,8 @@ public class Addition {
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){// Fichier Texte
-			  File add = new File("addition.txt");
-			  File addDat = new File("addition.dat");
-			  File adddest =  new File("E:/Travail/Projet Almoss/"+"addition.txt");
+			  File add = new File(curDir+"\\File\\addition.txt");
+			  File addDat = new File(curDir+"\\File\\addition.dat");
 			  add.createNewFile();
 			  addDat.createNewFile();
 			  //copyFile(sous,sousdest);
@@ -146,9 +140,8 @@ public class Addition {
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{ //Fichier mcs
-			  File add = new File("addition.mcs");
-			  File addDat = new File("addition.dat");
-			  File adddest =  new File("E:/Travail/Projet Almoss/"+"soustraction.mcs");
+			  File add = new File(curDir+"\\File\\addition.mcs");
+			  File addDat = new File(curDir+"\\File\\addition.dat");
 			  add.createNewFile();
 			  addDat.createNewFile();
 			  //copyFile(sous,sousdest);

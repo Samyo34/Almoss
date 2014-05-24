@@ -28,28 +28,66 @@ public class AfficheGraphe extends JPanel{
 	public void CalculeGraphe(File fichier, JPanel pane) throws FileNotFoundException{
 		file = new FileInputStream(fichier.getAbsolutePath());
 
-		ArrayList<Integer>valeurs = new ArrayList<Integer>();
-
-		try {
-			file.skip(256);
-
-			while((byteLu=file.read(buffer))!=-1){
-				oct = byteArrayToInt(buffer);
-				valeurs.add(oct);	
+		if(fichier.getName().toLowerCase().endsWith("mcs")){
+			ArrayList<Integer>valeurs = new ArrayList<Integer>();
+			try {
+				file.skip(256);
+	
+				while((byteLu=file.read(buffer))!=-1){
+					oct = byteArrayToInt(buffer);
+					valeurs.add(oct);	
+				}
+				int m=(valeurs.get(0)+valeurs.get(1)+valeurs.get(2)+valeurs.get(3)+valeurs.get(4)+valeurs.get(5)+valeurs.get(6)+valeurs.get(7))/8;
+				valeurs.remove(0);
+				valeurs.add(0,m);
+				double[] x = new double[valeurs.size()-1];
+				double[] y = new double[valeurs.size()-1];
+	
+	
+	
+				for (int i=0; i<valeurs.size()-1;i++){
+					x[i] = (double)i;	
+					y[i]= (double) valeurs.get(i);
+				}
+	
+				plot.addScatterPlot("graphe", x, y);
+				pane.setLayout(new BorderLayout());
+				pane.removeAll();
+				pane.add(plot, BorderLayout.CENTER);
+				pane.revalidate();
+				pane.repaint();
+				file.close();
+	
+	
+	
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			int m=(valeurs.get(0)+valeurs.get(1)+valeurs.get(2)+valeurs.get(3)+valeurs.get(4)+valeurs.get(5)+valeurs.get(6)+valeurs.get(7))/8;
-			valeurs.remove(0);
-			valeurs.add(0,m);
-			double[] x = new double[valeurs.size()-1];
-			double[] y = new double[valeurs.size()-1];
-
-
-
-			for (int i=0; i<valeurs.size()-1;i++){
-				x[i] = (double)i;	
-				y[i]= (double) valeurs.get(i);
+		}
+	}
+	
+	public void calculeGrapheDat(File fichier, JPanel pane) throws IOException{
+		file = new FileInputStream(fichier.getAbsolutePath());
+		System.out.println(fichier.getName().toLowerCase());
+		if(fichier.getName().toLowerCase().endsWith("dat")){
+			InputStreamReader fileStream =new InputStreamReader(file);
+			BufferedReader buffer=new BufferedReader(fileStream);
+			double[] x = new double[countRow(fichier)-1];
+			double[] y = new double[countRow(fichier)-1];
+			
+			buffer.readLine(); // On saute la première ligne
+			String ligne;
+			double[] tab = new double[2];
+			int i =0;
+			while((ligne = buffer.readLine()) != null){
+				tab = litValeur(ligne);
+				x[i] = tab[0];
+				y[i] = tab[1];
+				i++;
+	
 			}
-
+			
 			plot.addScatterPlot("graphe", x, y);
 			pane.setLayout(new BorderLayout());
 			pane.removeAll();
@@ -57,41 +95,7 @@ public class AfficheGraphe extends JPanel{
 			pane.revalidate();
 			pane.repaint();
 			file.close();
-
-
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
-	
-	public void calculeGrapheDat(File fichier, JPanel pane) throws IOException{
-		file = new FileInputStream(fichier.getAbsolutePath());
-		InputStreamReader fileStream =new InputStreamReader(file);
-		BufferedReader buffer=new BufferedReader(fileStream);
-		double[] x = new double[countRow(fichier)-1];
-		double[] y = new double[countRow(fichier)-1];
-		
-		buffer.readLine(); // On saute la première ligne
-		String ligne;
-		double[] tab = new double[2];
-		int i =0;
-		while((ligne = buffer.readLine()) != null){
-			tab = litValeur(ligne);
-			x[i] = tab[0];
-			y[i] = tab[1];
-			i++;
-
-		}
-		
-		plot.addScatterPlot("graphe", x, y);
-		pane.setLayout(new BorderLayout());
-		pane.removeAll();
-		pane.add(plot, BorderLayout.CENTER);
-		pane.revalidate();
-		pane.repaint();
-		file.close();
 		
 	}
 	
@@ -109,12 +113,14 @@ public class AfficheGraphe extends JPanel{
 	}
 	
 	public double[] litValeur(String s){
+		System.out.println(s);
 		double [] tab = new double[2];
 		int debut, fin;
 		double x,y;
 		String s1,s2;
 		debut = 0;
 		fin = s.indexOf("	");
+		
 		s1=s.substring(debut, fin);
 		x = Double.valueOf(s1);
 		

@@ -21,6 +21,8 @@ public class Soustraction {
 	static int byteLu;
 	static byte[] buffer = new byte[4];
 	static byte[] buffer2 = new byte[4];
+	String curDir = System.getProperty("user.dir");
+	//String curDir = "E:\\Travail\\Projet_Almoss\\Almoss";
 	
 	  //public static void main(String[] argv) throws IOException
 		public Soustraction(ArrayList<File> listFichier, int type, JPanel graphe) throws IOException
@@ -103,9 +105,9 @@ public class Soustraction {
 		  
 		  /*Ecriture dans un fichier */
 		  if (type == 0){
-			  File sous = new File("soustraction.txt");
-			  File sousDat = new File("soustraction.dat");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"soustraction.txt");
+			  File sous = new File(curDir+"\\File\\soustraction.txt");
+			  File sousDat = new File(curDir+"\\File\\soustraction.dat");
+			  File sousdest =  new File(curDir+"\\File\\soustraction.txt");
 			  sous.createNewFile();
 			  sousDat.createNewFile();
 			  copyFile(sous,sousdest);
@@ -131,9 +133,9 @@ public class Soustraction {
 			  graphe.add(plot);
 			  graphe.repaint();
 		  }else{
-			  File sous = new File("soustraction.mcs");
-			  File sousDat = new File("soustraction.dat");
-			  File sousdest =  new File("E:/Travail/Projet Almoss/"+"addition.mcs");
+			  File sous = new File(curDir+"\\File\\soustraction.mcs");
+			  File sousDat = new File(curDir+"\\File\\soustraction.dat");
+			  File sousdest =  new File(curDir+"\\File\\addition.mcs");
 			  sous.createNewFile();
 			  sousDat.createNewFile();
 			  copyFile(sous,sousdest);

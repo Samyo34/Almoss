@@ -28,22 +28,9 @@ public class MenuBarAlmoss extends JMenuBar{
 		super();
 		JMenu fichier, param;
 		/* Création des menus */
-		fichier = new JMenu("Fichier");
 		param = new JMenu("Parametres");// vide pour le moment
 		
-		/* Création des elements contenu dans les menus */
-		ouvrir = new JMenuItem("Ouvrir...");
-		ouvrir.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				choix = new JFileChooser();
-				returnVal = choix.showOpenDialog(null); // on fait apparaitre la fenetre de selection des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqu� sur OK ou annuler (ou autres...)
-				file = choix.getSelectedFile(); // R�cup�ration du fichier s�l�ctionner
-				if (returnVal == JFileChooser.APPROVE_OPTION){
-					filesel = true;
-				}
-			}
-		});
+		
 		
 		para = new JMenuItem("Fichier param�tre (.par)");
 		para.addActionListener(new ActionListener(){
@@ -57,13 +44,11 @@ public class MenuBarAlmoss extends JMenuBar{
 		
 		
 		/* Ajout des items au menu */
-		fichier.add(ouvrir);
 		param.add(para);
 		
 		
 		
 		/* Ajouts des menus à la barre de menu */
-		this.add(fichier);
 		this.add(param);
 	
 	

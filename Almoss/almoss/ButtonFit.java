@@ -119,13 +119,15 @@ public class ButtonFit extends JButton{
 		File repertoire = new File(curDir+"\\File");
 		
 		File[] list = repertoire.listFiles();
-		int valeur;
+		int valeur=0;
 		int max=0;
 		if(list.length==0){
 			/* Ne rien Faire */
 		}else{
 			for(int i=0;i<list.length;i++){
-				valeur = Integer.parseInt(Character.toString(list[i].getName().charAt(4)));// récupération du numeros de dossier (Full*)
+				if(list[i].isDirectory()){
+					valeur = Integer.parseInt(Character.toString(list[i].getName().charAt(4)));// récupération du numeros de dossier (Full*)
+				}
 				if(valeur>=max){
 					max = valeur;
 				}

@@ -35,6 +35,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 
 
+
 //Pour obtenir la liste des fichiers selectionn�s
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -141,10 +142,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				listClick.addListSelectionListener(new ListSelectionListener(){
 					public void valueChanged(ListSelectionEvent arg0) {
 						if(listClick.getValueIsAdjusting() && !listClick.isSelectionEmpty()){
-							// R�cup�ration du Model de la list
+							// Recuperation du Model de la list
 							DefaultListModel model2 = (DefaultListModel) listClick.getModel();
 							litList(list);
-							// Suppr�ssion de l'�lement s�l�ction�
+							// Suppression de l'element selectione
 							list.remove(model2.indexOf(listClick.getSelectedValue()));
 							litList(list);
 							model2.remove(listClick.getSelectedIndex());
@@ -160,6 +161,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				});
 				panFich.removeAll();
 				panFich.add(scroll);
+				panFich.revalidate();
 				panFich.repaint();
 
 				listF = list;
