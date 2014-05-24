@@ -1,10 +1,12 @@
-package almoss;
+package bouton;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import panel.PanelList;
 
 /*
  * Bouton permettant de supprimer une ligne dans la liste des fichiers

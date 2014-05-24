@@ -1,4 +1,4 @@
-package almoss;
+package fonction;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,25 +13,23 @@ import javax.swing.JPanel;
 
 public class ExecOpe extends JButton{
 	
-	File fich = new File("D:/1.MCS");
-	File fi2 = new File("D:/2.Mcs");
 
 	public ExecOpe(String s,final JComboBox box, final ArrayList<File> list, final JComboBox type, final JPanel graphe) throws IOException{
 		super(s);
 		addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if(list.size()>=2){
-					if(box.getSelectedItem()=="Addition"){
-						if (type.getSelectedItem()==".txt"){
+					if(box.getSelectedItem()=="Addition"){// si l'utilisateur a selectionne addition
+						if (type.getSelectedItem()==".txt"){// si l'utilisateur a demander un fichier txt en sortie
 							try {
-								Addition add = new Addition(list,0,graphe);
+								Addition add = new Addition(list,0,graphe); // execution de l'addition avec le parametre 0 (pour le fichier txt)
 							} catch (IOException e1) {
 								
 								e1.printStackTrace();
 							}
 						}else{
 							try {
-								Addition add = new Addition(list,1,graphe);
+								Addition add = new Addition(list,1,graphe);// execution de l'addition avec le parametre 1 (pour le fichier mcs)
 							} catch (IOException e1) {
 								
 								e1.printStackTrace();
@@ -41,14 +39,14 @@ public class ExecOpe extends JButton{
 					}else{
 						if (type.getSelectedItem()==".txt"){
 							try {
-								Soustraction add = new Soustraction(list,0,graphe);
+								Soustraction add = new Soustraction(list,0,graphe);// execution de la soustraction avec le parametre 0 (pour le fichier txt)
 							} catch (IOException e1) {
 								
 								e1.printStackTrace();
 							}
 						}else{
 							try {
-								Soustraction add = new Soustraction(list,1,graphe);
+								Soustraction add = new Soustraction(list,1,graphe);// execution de la soustraction avec le parametre 1 (pour le fichier mcs)
 							} catch (IOException e1) {
 	
 								e1.printStackTrace();

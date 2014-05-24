@@ -1,9 +1,12 @@
-package almoss;
+package fonction;
 
 import java.io.IOException;
 
 import com.developpez.adiguba.shell.Shell;
 
+/*
+ * Thread qui lance l'execution de Fullham avec la commande
+ */
 public class ExecFit extends Thread{
 	
 	String cmd;

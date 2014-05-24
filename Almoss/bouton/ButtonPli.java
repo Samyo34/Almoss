@@ -1,12 +1,13 @@
-package almoss;
+package bouton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import fonction.Pliage;
 
 public class ButtonPli extends JButton{
 	
@@ -15,7 +16,6 @@ public class ButtonPli extends JButton{
 		super(s);
 		addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("test");
 				Pliage pli = new Pliage(ouvr.getFichier());
 				try {
 					pli.pli(ouvr.getFichier(),graphe);

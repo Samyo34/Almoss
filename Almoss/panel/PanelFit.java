@@ -1,4 +1,4 @@
-package almoss;
+package panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -11,21 +11,26 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import almoss.MenuBarAlmoss;
+import bouton.SelecFichier;
+
 import com.developpez.adiguba.shell.Shell;
 
 public class PanelFit extends JPanel{
 	
 	JComboBox choixType = new JComboBox();
+	String curDir = System.getProperty("user.dir");
 	
 	public PanelFit(final MenuBarAlmoss filePara){
 		super();
 		JPanel pan = new JPanel(); // Panel contenant les boutons
 		JPanel pan2 = new JPanel();
-		JPanel panSelec = new JPanel();
-		JPanel panGraphe = new JPanel();
+		JPanel panSelec = new JPanel();// Panel contenant le bouton de selection de fichier
+		JPanel panGraphe = new JPanel();// Panel contenant le graphe
 		
 		panGraphe.setBorder(new javax.swing.border.BevelBorder(BevelBorder.RAISED));
 		
+		// Les differents choix
 		choixType.addItem("3");
 		choixType.addItem("2");
 		choixType.addItem("1");
@@ -39,7 +44,7 @@ public class PanelFit extends JPanel{
 		grid.setVgap(20);
 		pan.setLayout(grid);
 		
-		final SelecFichier ouvr = new SelecFichier("Selection Fichier",panGraphe,1); // Bouton offrant la possiblité d'ouvrire un fichier
+		final SelecFichier ouvr = new SelecFichier("Selection Fichier",panGraphe,1); // Bouton offrant la possiblite d'ouvrir un fichier
 		
 		
 		
@@ -56,7 +61,7 @@ public class PanelFit extends JPanel{
 			
 		public void actionPerformed(ActionEvent e) {
 			try {
-				int res = Shell.system("E:\\Travail\\Projet_Almoss\\full\\fullham.exe " + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
+				int res = Shell.system(curDir+"\\full\\fullham.exe" + ouvr.getFichier().getAbsolutePath() + " " + filePara.getFilePara().getAbsolutePath() + " "+ choixType.getSelectedItem());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

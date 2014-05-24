@@ -1,25 +1,27 @@
-package almoss;
+package panel;
 
 import java.awt.BorderLayout;
 import java.io.File;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
-import com.developpez.adiguba.shell.Shell;
+import bouton.ButtonFit;
+import bouton.SelecFichier;
 
+/*
+ * Onglet permettant d'excuter un fit avec fullham sur plusieurs fichiers
+ */
 public class PanelMulti extends JPanel{
 	
-	JPanel panBouton = new JPanel();
+	JPanel panBouton = new JPanel(); // Panel contenant les boutons
 	File[] files;
 	SelecFichier[] pars;
-	JComboBox<String> choixType = new JComboBox<String>();
-	ButtonFit fit = new ButtonFit(choixType);
-	PanelList listFichier = new PanelList(fit, this);
-	SelecFichier select = new SelecFichier("Ajouter des fichiers", this);
+	JComboBox<String> choixType = new JComboBox<String>(); // Choix du type de Fit (3,2,1)
+	ButtonFit fit = new ButtonFit(choixType); // Bouton excutant le fit pour l'ensemble des fichiers selectionnes
+	PanelList listFichier = new PanelList(fit, this);// Panel contenant la liste des fichiers selectionnes
+	SelecFichier select = new SelecFichier("Ajouter des fichiers", this);// Bouton de selection de fichiers (selection multliple)
 	
 	
 	
@@ -42,6 +44,9 @@ public class PanelMulti extends JPanel{
 		add(listFichier);
 	}
 	
+	/*
+	 * Ajoute une ligne (info fichiers, boutons, avancement du fit) ) a la liste des fichiers
+	 */
 	public void addLines(File[] fichiers){
 		files = new File[fichiers.length];
 		pars = new SelecFichier[fichiers.length];

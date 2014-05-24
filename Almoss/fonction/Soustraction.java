@@ -1,6 +1,5 @@
-package almoss;
+package fonction;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,19 +11,18 @@ import javax.swing.JPanel;
 
 import org.math.plot.Plot2DPanel;
 
-
+/*
+ * Class premettant la soustraction de fichiers Mcs
+ * Le resultat est ecrit dans un fichier
+ */
 public class Soustraction {
 	
-	//static File file1 = new File("E:/Travail/Projet Almoss/spectre3.MCS");
-	//static File file2 = new File("E:/Travail/Projet Almoss/SPECTRE.Mcs");
 	static FileInputStream fis1,fis2;
 	static int byteLu;
 	static byte[] buffer = new byte[4];
 	static byte[] buffer2 = new byte[4];
 	String curDir = System.getProperty("user.dir");
-	//String curDir = "E:\\Travail\\Projet_Almoss\\Almoss";
-	
-	  //public static void main(String[] argv) throws IOException
+
 		public Soustraction(ArrayList<File> listFichier, int type, JPanel graphe) throws IOException
 	  {
 		  
@@ -34,7 +32,6 @@ public class Soustraction {
 		  fis1=new FileInputStream(listFichier.get(0));
 		  
 		  try{
-			  	//fis1.skip(256);// Saut des 256 premiers octets (ce ne sont pas ceux contenant les valeurs)
 			  for(int i=0;i<256;i++){
 				  debut[i]=(byte) fis1.read();
 			  }
@@ -53,7 +50,7 @@ public class Soustraction {
 		  
 		  
 		  /* ***************Second fichier******************* */
-		  ArrayList<ArrayList> listDeList = new ArrayList<ArrayList>();
+		  ArrayList<ArrayList<Integer>> listDeList = new ArrayList<ArrayList<Integer>>();
 		  ArrayList<Integer>list2 = new ArrayList<Integer>();
 		  for(int i=1; i<listFichier.size();i++){
 			  list2.clear();

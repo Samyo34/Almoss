@@ -1,4 +1,4 @@
-package almoss;
+package panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -6,16 +6,18 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import bouton.ButtonPli;
+import bouton.SelecFichier;
+
 public class PanelPliage extends JPanel {
-	
+
+	private static final long serialVersionUID = 1L;
 	JPanel panGraphe = new JPanel(); // Panel contenant le graphe;
 	
 	public PanelPliage(){
 		JPanel pan = new JPanel(); // Panel contenant les boutons
 		JPanel panGroupe =  new JPanel();// Panel contenant le panel pan (facilite le positionnement)
-		
-		//BorderLayout grid = new BorderLayout();
-		//pan.setLayout(grid);
+		;
 		
 		SelecFichier ouvr = new SelecFichier("Selection Fichier",panGraphe,1); // Bouton offrant la possiblité d'ouvrire un fichier
 		ButtonPli pli = new ButtonPli("Plier !", ouvr, panGraphe);

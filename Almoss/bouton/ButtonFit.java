@@ -1,73 +1,60 @@
-package almoss;
+package bouton;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
-import com.developpez.adiguba.shell.Shell;
+import panel.PanelLFichier;
+import fonction.ExecFit;
+import almoss.MenuBarAlmoss;
 
 public class ButtonFit extends JButton{
 	
 	File[] files;
 	SelecFichier[] pars;
 	PanelLFichier[] panel;
-	String curDir = System.getProperty("user.dir");
-	//String curDir = "E:\\Travail\\Projet_Almoss\\Almoss";
+	String curDir = System.getProperty("user.dir");// permet de connaitre le repertoire courant de l'application
 	
 	public ButtonFit(final JComboBox type){
 		super("lancer le fit");
 		addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				// TODO : la commande d'éxecution de fullham
-				//			modifier le texte dans les JPanel
 				String cmd;
 				ExecFit fit = new ExecFit();
-				for (int i=0; i<files.length;i++){
+				for (int i=0; i<files.length;i++){//Pour tout les fichiers selectionne
 					
 					panel[i].changeEtat("En cours...");
-					try {
-						for(File file:getFileFullH()){
-							System.out.println(file.getAbsolutePath());
-						}
-					} catch (HeadlessException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
 					
-						int res =0;
-						System.out.println(files[i]);
-						MenuBarAlmoss para = new MenuBarAlmoss();
-						if(pars[i].getFichier() == null){
-							//E:\\Travail\\Projet_Almoss\\full\\fullham.exe
+						MenuBarAlmoss para = new MenuBarAlmoss(); // premet de recuperer le fichier .par selectionne dans la barre de menu
+						if(pars[i].getFichier() == null){ // si l'utilisateur n'a pas fait de selection de fichier dans l'onglet Fit :
+							// Utilisation du fichier .par selectioner dans le barre de menu
 							cmd = curDir+"\\Log\\fullham.exe " + files[i].getAbsolutePath() + " " + para.getFilePara() + " "+ type.getSelectedItem();
 						}else{
+							// Utilisation du fichier .par selectionne dans l'onglet
 							cmd = curDir+"\\Log\\fullham.exe " + files[i].getAbsolutePath() + " " + pars[i].getFichier().getAbsolutePath() + " "+ type.getSelectedItem();
 						}
-						fit.setCmd(cmd);
-						fit.run();
-						//fit.wait();
+						fit.setCmd(cmd); // creation d'un thread qui execute fullham
+						fit.run();// Execution du thread
 						panel[i].changeEtat("Terminer");
 						
 							/* Déplacement des fichiers dans le répertoire approprié */
 							int numRep;
 							try {
 								
-								numRep = creerRep();
+								numRep = creerRep();// creer un repertoire Full*
+								// deplace les fichiers creer par Fullham dans le repertoire crée
 								deplaceFiles(getFileFullH(),curDir+ "\\File\\Full"+numRep+"\\");
+								// Selectionne le fichier fit.delta pour GnuPlot + ajout du bouton gnuplot
 								File fileD = new File(curDir+"\\File\\Full"+numRep+"\\fit.delta");
 								panel[i].addButton(fileD);
 							} catch (IOException e1) {
@@ -87,6 +74,9 @@ public class ButtonFit extends JButton{
 		});
 	}
 	
+	/*
+	 * Recuperation la liste des fichiers selectionne par l'utilisateur
+	 */
 	public void setFiles(HashMap<Integer, PanelLFichier> map){
 		files = new File[map.size()];
 		pars = new SelecFichier[map.size()];
@@ -105,7 +95,6 @@ public class ButtonFit extends JButton{
 	 */
 	public int creerRep() throws IOException{
 		int num = (scanRepFile()+1);
-		//E:\\Travail\\Projet_Almoss\\Almoss\\
 		File file = new File(curDir+"\\File\\Full"+num);
 		file.mkdir();
 		if(file.exists()){
@@ -115,10 +104,15 @@ public class ButtonFit extends JButton{
 		return num;
 	}
 	
+	/*
+	 * Scan le repertoire File pour connaitre le dernier repertoire :
+	 * repertoire sous la forme : Full* (avec * le numeros du repertoire)
+	 * return : le * le plus grand 
+	 */
 	public int scanRepFile(){
 		File repertoire = new File(curDir+"\\File");
 		
-		File[] list = repertoire.listFiles();
+		File[] list = repertoire.listFiles();// recuperation de la liste des fichiers present dans "repertoire"
 		int valeur=0;
 		int max=0;
 		if(list.length==0){
@@ -158,6 +152,9 @@ public class ButtonFit extends JButton{
 		
 	}
 	
+	/*
+	 * Deplace les fichiers de files dans destination
+	 */
 	public void deplaceFiles(File [] files, String destination) throws IOException{
 		File fileDest;
 		for(int i=0;i<files.length;i++){
@@ -170,6 +167,9 @@ public class ButtonFit extends JButton{
 		}
 	}
 	
+	/*
+	 * Depalace le fichier "source" dans "destination"
+	 */
 	public void deplacer(File source,File destination) {
 		FileChannel in = null; // canal d'entrée
 		FileChannel out = null; // canal de sortie
@@ -183,9 +183,10 @@ public class ButtonFit extends JButton{
 		  in.transferTo(0, in.size(), out);
 		  in.close();
 		  out.close();
+		  // Suppression de du fichier source
 		  source.delete();
 		} catch (Exception e) {
-		  e.printStackTrace(); // n'importe quelle exception
+		  e.printStackTrace();
 		} finally { // finalement on ferme
 		  if(in != null) {
 		  	try {

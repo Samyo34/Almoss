@@ -1,8 +1,5 @@
-package almoss;
+package bouton;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,15 +9,9 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-
-
-
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,10 +27,27 @@ import javax.swing.filechooser.FileFilter;
 
 
 
+
+
+
+
+import fonction.Filtre;
+import panel.AfficheGraphe;
+import panel.PanelAffiche;
+import panel.PanelMulti;
+import panel.PanelOpe;
+import panel.PanelPliage;
+
+
+
 //Pour obtenir la liste des fichiers selectionn�s
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/*
+ * Classe premettant, au travers de ses constructeurs de creer et afficher
+ * un slectionneur de fichier
+ */
 public class SelecFichier extends JButton implements ListSelectionListener {
 	public File fichier;
 	JFileChooser choix;
@@ -57,7 +65,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 	//filtreDat.addExtension(".dat");
 	//filtreDat.addExtenion(".DAT");
 	
-	
+	// Selectionneur de fichier simple
 	public SelecFichier(String s){
 		super(s);
 		this.addActionListener(new ActionListener() {
@@ -65,27 +73,24 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				choix = new JFileChooser();
 				choix.setCurrentDirectory(dir);
 				choix.setMultiSelectionEnabled(true);
-
-				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
-				// fenetre de selection
-				// des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
-				// ou annuler (ou autres...)
+				// on fait apparaitre la fenetre de selection des fichiers returnVal permet de tester si l'utilisateur a clique sur OK ou annuler (ou autres...)
+				returnVal = choix.showOpenDialog(null);
 				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
 				dir = choix.getCurrentDirectory();
 			}
 		});
 	}
 
+	/*
+	 * Selectionneur de fichier pour les operations (choix multiple)
+	 */
 	public SelecFichier(String s, final PanelOpe pane, final int num,final ArrayList<File> list, final JPanel panFich) {
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				choix = new JFileChooser(".");
 				choix.setCurrentDirectory(dir);
-				choix.setMultiSelectionEnabled(true);// Permet la selection
-				// simultan�e de
-				// plusieurs fichiers
+				choix.setMultiSelectionEnabled(true);// Permet la selection simultane de plusieurs fichiers
 
 				choix.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent evt) {
@@ -95,17 +100,9 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 							File[] oldFiles = (File[]) evt.getOldValue();
 							File[] newFiles = (File[]) evt.getNewValue();
 
-							// Obtenir la liste des fichiers s�lectionn�s
+							// Obtenir la liste des fichiers selectionnes
 							files = choix.getSelectedFiles();
 							dir = choix.getCurrentDirectory();
-							/*
-							 * --Afficher la liste des fichiers s�lectionn�s
-							 *
-							 * for(int i=0;i<files.length;i++){
-							 * System.out.println(files[i]);
-							 *
-							 * }
-							 */
 
 						}
 					}
@@ -114,7 +111,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
 				// fenetre de selection
 				// des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
+				// returnVal permet de tester si l'utilisateur a clique sur OK
 				// ou annuler (ou autres...)
 				for(int i=0;i<files.length;i++){
 					fichier = new File(files[i].getAbsolutePath()); // Recuperation du fichier selectionner
@@ -144,10 +141,8 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 						if(listClick.getValueIsAdjusting() && !listClick.isSelectionEmpty()){
 							// Recuperation du Model de la list
 							DefaultListModel model2 = (DefaultListModel) listClick.getModel();
-							litList(list);
 							// Suppression de l'element selectione
 							list.remove(model2.indexOf(listClick.getSelectedValue()));
-							litList(list);
 							model2.remove(listClick.getSelectedIndex());
 
 							// Affectation du nouveau model (donc nouvelle list)
@@ -170,6 +165,9 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 	}
 
+	/*
+	 * Pour le pliage
+	 */
 	public SelecFichier(String s, final PanelPliage pane, final int num) {
 		super(s);
 		this.addActionListener(new ActionListener() {
@@ -196,7 +194,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 		});
 
 	}
-
+	
+	/*
+	 * 
+	 */
 	public SelecFichier(String s, final JPanel pane, final int num){
 		super(s);
 		this.addActionListener(new ActionListener() {
@@ -208,7 +209,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 				returnVal = choix.showOpenDialog(null); // on fait apparaitre la
 				// fenetre de selection
 				// des fichiers
-				// returnVal permet de tester si l'utilisateur a cliqu� sur OK
+				// returnVal permet de tester si l'utilisateur a clique sur OK
 				// ou annuler (ou autres...)
 				fichier = new File(choix.getSelectedFile().getAbsolutePath()); // Recuperation du fichier selectionne
 				dir = choix.getCurrentDirectory();
@@ -227,7 +228,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 	}
 
-	public SelecFichier(String s, final PanelAffiche affiche){ //Panel Affiche
+	/*
+	 * Pour le panel Affiche
+	 */
+	public SelecFichier(String s, final PanelAffiche affiche){
 		super(s);
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -260,7 +264,10 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 	}
 	
-	public SelecFichier(String s , final PanelMulti pane){ // PanelMulti
+	/*
+	 * Pour le Panel du Fit (mutli selection)
+	 */
+	public SelecFichier(String s , final PanelMulti pane){
 		super(s);
 		
 		this.addActionListener(new ActionListener() {
@@ -278,17 +285,11 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 							File[] oldFiles = (File[]) evt.getOldValue();
 							File[] newFiles = (File[]) evt.getNewValue();
 
-							// Obtenir la liste des fichiers s�lectionn�s
+							// Obtenir la liste des fichiers selectionnes
 							files = choix.getSelectedFiles();
+							// Memorise le dernier dossier visiter
 							dir = choix.getCurrentDirectory();
-							/*
-							 * --Afficher la liste des fichiers s�lectionn�s
-							 *
-							 * for(int i=0;i<files.length;i++){
-							 * System.out.println(files[i]);
-							 *
-							 * }
-							 */
+				
 
 						}
 					}
@@ -312,14 +313,7 @@ public class SelecFichier extends JButton implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		//listClick.remove(listClick.getAnchorSelectionIndex());
 
 	}
 
-	public void litList(ArrayList<File> list){
-		for(int i=0; i<list.size();i++){
-			System.out.print(list.get(i) + " * ");
-		}
-		System.out.println();
-	}
 }

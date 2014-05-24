@@ -1,11 +1,8 @@
 package almoss;
 
 import java.awt.event.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -13,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class MenuBarAlmoss extends JMenuBar{
+
+	private static final long serialVersionUID = 1L;
 	JMenuItem ouvrir,para;
 	JFileChooser choix,choixpara;
 	int returnVal;
@@ -26,12 +25,12 @@ public class MenuBarAlmoss extends JMenuBar{
 	
 	public MenuBarAlmoss(final FenetreAlmoss fen) throws FileNotFoundException{
 		super();
-		JMenu fichier, param;
-		/* CrÃ©ation des menus */
+		JMenu param;
+		/* Creation des menus */
 		param = new JMenu("Parametres");// vide pour le moment
 		
 		
-		
+		//Lors d'un clique sur l'item : ouvre une selection de fichier pour un fichier .par
 		para = new JMenuItem("Fichier paramètre (.par)");
 		para.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){

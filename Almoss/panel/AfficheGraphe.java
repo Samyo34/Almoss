@@ -1,4 +1,4 @@
-package almoss;
+package panel;
 
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
@@ -25,17 +25,20 @@ public class AfficheGraphe extends JPanel{
 		super();
 	}
 
+	/*
+	 * Creation d'un graphe à partire d'un fichier MCS
+	 */
 	public void CalculeGraphe(File fichier, JPanel pane) throws FileNotFoundException{
 		file = new FileInputStream(fichier.getAbsolutePath());
 
-		if(fichier.getName().toLowerCase().endsWith("mcs")){
+		if(fichier.getName().toLowerCase().endsWith("mcs")){// test de l'extension du fichier
 			ArrayList<Integer>valeurs = new ArrayList<Integer>();
 			try {
-				file.skip(256);
+				file.skip(256); // saut des 256 premier bit
 	
-				while((byteLu=file.read(buffer))!=-1){
+				while((byteLu=file.read(buffer))!=-1){ // recuperation des valeurs
 					oct = byteArrayToInt(buffer);
-					valeurs.add(oct);	
+					valeurs.add(oct);
 				}
 				int m=(valeurs.get(0)+valeurs.get(1)+valeurs.get(2)+valeurs.get(3)+valeurs.get(4)+valeurs.get(5)+valeurs.get(6)+valeurs.get(7))/8;
 				valeurs.remove(0);
@@ -44,7 +47,7 @@ public class AfficheGraphe extends JPanel{
 				double[] y = new double[valeurs.size()-1];
 	
 	
-	
+				// Creation des donnees pour tracer la courbe
 				for (int i=0; i<valeurs.size()-1;i++){
 					x[i] = (double)i;	
 					y[i]= (double) valeurs.get(i);
@@ -67,10 +70,16 @@ public class AfficheGraphe extends JPanel{
 		}
 	}
 	
+	/*
+	 * Affichage d'un graphe à partire d'un fichier DAT
+	 */
 	public void calculeGrapheDat(File fichier, JPanel pane) throws IOException{
 		file = new FileInputStream(fichier.getAbsolutePath());
+		
 		System.out.println(fichier.getName().toLowerCase());
-		if(fichier.getName().toLowerCase().endsWith("dat")){
+		
+		if(fichier.getName().toLowerCase().endsWith("dat")){// test de l'extension du fichier
+			
 			InputStreamReader fileStream =new InputStreamReader(file);
 			BufferedReader buffer=new BufferedReader(fileStream);
 			double[] x = new double[countRow(fichier)-1];
@@ -80,6 +89,8 @@ public class AfficheGraphe extends JPanel{
 			String ligne;
 			double[] tab = new double[2];
 			int i =0;
+			
+			// Creation des donnees pour tracer la courbe
 			while((ligne = buffer.readLine()) != null){
 				tab = litValeur(ligne);
 				x[i] = tab[0];
@@ -104,14 +115,17 @@ public class AfficheGraphe extends JPanel{
 		InputStreamReader fileStream =new InputStreamReader(file);
 		BufferedReader buffer=new BufferedReader(fileStream);
 		
-		String ligne;
 		int i =0;
+		String ligne;
 		while ((ligne = buffer.readLine()) != null){
 			i++;
 		}
 		return i;
 	}
 	
+	/*
+	 * Recupere la valeur Integer à partir d'une string
+	 */
 	public double[] litValeur(String s){
 		System.out.println(s);
 		double [] tab = new double[2];
