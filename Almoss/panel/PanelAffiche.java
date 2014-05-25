@@ -54,6 +54,8 @@ public class PanelAffiche extends JPanel{
 			graphe.CalculeGraphe(fichier, panGraphe);// si c'est un fichier mcs
 		}else if(fichier.getName().endsWith(".dat") || fichier.getName().endsWith(".DAT")){
 			graphe.calculeGrapheDat(fichier, panGraphe);// si c'est un fichier dat
+		}else if(fichier.getName().endsWith("delta")){
+			graphe.affGnuPlot(fichier);
 		}
 	}
 }

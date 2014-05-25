@@ -1,17 +1,25 @@
 package panel;
 
 import java.awt.BorderLayout;
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.math.plot.Plot2DPanel;
+
+import almoss.FenetreAlmoss;
 
 public class AfficheGraphe extends JPanel{
 
@@ -20,6 +28,7 @@ public class AfficheGraphe extends JPanel{
 	static int byteLu;
 	int oct;
 	Plot2DPanel plot = new Plot2DPanel();
+	String curDir = System.getProperty("user.dir"); // premet de connaitre le repertoire courant de l'application
 
 	public AfficheGraphe(){
 		super();
@@ -107,6 +116,34 @@ public class AfficheGraphe extends JPanel{
 			pane.repaint();
 			file.close();
 		}
+		
+	}
+	
+	/*
+	 * Panel Affichage : ouvre un fichier gnuPlot avec le fichier delta en parametre
+	 */
+	public void affGnuPlot(File fileDelta) throws HeadlessException, FileNotFoundException, IOException{
+		String cmd="plot '"+fileDelta.getAbsolutePath()+"' using 1:2 with points ls 1, \"\" u 1:3 w l ls 3, \"\" u 1:(1.005+column(2) -column(3))with points ls 3, \"\" u 1:(0.005+column(5))w l ls 1";;
+		Object[] options = {"1 doublet","2 doublets","3 doublets", "4 doublets"};
+		int n = JOptionPane.showOptionDialog(FenetreAlmoss.getInstance(), "Choisissez le nombre de doublet :", "Choix doublet", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		switch(n){
+		case 0 : // 1 doublet
+			cmd= "plot '"+fileDelta.getAbsolutePath()+"' using 1:2 with points ls 1, \"\" u 1:3 w l ls 3, \"\" u 1:(1.005+column(2) -column(3))with points ls 3, \"\" u 1:(0.005+column(5))w l ls 1";
+		case 1:// 2 doublets
+			cmd= "plot '"+fileDelta.getAbsolutePath()+"' using 1:2 with points ls 1,\"\" u 1:3 w l ls 1, \"\" u 1:4 w l ls 3,\"\" u 1:5 w l ls 6, \"\" u 1:(1.005+column(2) -column(3))with points ls 3, \"\" u 1:(0.005+column(6))w l ls 1";
+		case 2:// 3 doublets
+			cmd= "plot '"+fileDelta.getAbsolutePath()+"' using 1:2 with points ls 1,\"\" u 1:3 w l ls 1, \"\" u 1:4 w l ls 3,\"\" u 1:5 w l ls 6,\"\" u 1:6 w l ls 4, \"\" u 1:(1.005+column(2) -column(3))with points ls 3, \"\" u 1:(0.005+column(7))w l ls 1";
+		case 3:// 4 doublets
+			cmd= "plot '"+fileDelta.getAbsolutePath()+"' using 1:2 with points ls 1,\"\" u 1:3 w l ls 1, \"\" u 1:4 w l ls 3,\"\" u 1:5 w l ls 6,\"\" u 1:6 w l ls 4,\"\" u 1:7 w l ls 5, \"\" u 1:(1.005+column(2) -column(3))with points ls 3, \"\" u 1:(0.005+column(8))w l ls 1";
+		}
+		// Execution de gnuPlot
+		Runtime runtime = Runtime.getRuntime();
+		Process process = runtime.exec(curDir+"/Log/GnuPlot/pgnuplot.exe");
+		OutputStream opStream = process.getOutputStream();
+		// Excriture de la ligne de commande
+        PrintWriter gp =new PrintWriter(new BufferedWriter(new OutputStreamWriter(opStream)));
+        gp.println(cmd);
+        gp.flush();
 		
 	}
 	
